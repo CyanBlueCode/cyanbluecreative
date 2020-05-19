@@ -4,7 +4,6 @@ import GridList from '@material-ui/core/GridList';
 import GridListTile from '@material-ui/core/GridListTile';
 // import tileData from './tileData';
 import stockImgs from '../stockImgs.json';
-// import { photos as stockImgs } from './photos'
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -15,8 +14,8 @@ const useStyles = makeStyles((theme) => ({
     backgroundColor: theme.palette.background.paper,
   },
   gridList: {
-    minWidth: 'auto',
-    height: 'auto',
+    minWidth: '100%',
+    height: '100%',
     objectFit: 'fill'
   },
 }));
@@ -44,9 +43,9 @@ export default function ImageGridList() {
 
   return (
     <div className={classes.root}>
-      <GridList cellHeight='auto' cols='3'>
+      <GridList cellHeight='auto' className={classes.gridList} cols='2'>
         {stockImgs.photos.map((tile) => (
-          <GridListTile key={tile.src} className={classes.gridList} cols={tile.cols || 2}>
+          <GridListTile key={tile.src} cols={tile.cols || 1}>
             <img src={tile.src} alt="" />
           </GridListTile>
         ))}
