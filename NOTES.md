@@ -1,2 +1,15 @@
+[ TO-DO ]
+- responsive nav bar/header
+- shared main gallery component
+  - switch database on navigation instead of separate gallery pages (more work, no real benefit?)
+- homepage component
+- homepage image slider
+- photo gallery menu component
+- about page component
+- contact form modal
+  - feature: user img upload
+- footer component
+
+[ Resources ]
 react-lazyload
 https://www.freecodecamp.org/news/how-to-optimize-react-applications-with-lazy-loading-232183e02768/
