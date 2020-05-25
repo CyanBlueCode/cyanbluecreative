@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import './App.css';
-import ImgGallery from './components/imgGallery';
-import Header from './components/header';
-import Footer from './components/footer';
-import Navigation from './components/navigation';
-import HomePage from './components/homePage';
-import UnderConstruction from './components/underConstruction';
+import ImgGallery from './components/gallery/img-gallery';
+import Header from './components/header/header';
+import Footer from './components/footer/footer';
+import Navigation from './components/navbar/navigation';
+import HomePage from './components/pages/home-page';
+import UnderConstruction from './components/under-construction';
 import { Switch, Route, withRouter } from 'react-router-dom';
 import Firebase from './config';
 

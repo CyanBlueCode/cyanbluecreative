@@ -1,7 +1,7 @@
 [ TO-DO ]
 - responsive nav bar/header
 - shared main gallery component
-  - switch database on navigation instead of separate gallery pages (more work, no real benefit?)
+- gallery page for each portfolio category
 - homepage component
 - homepage image slider
 - photo gallery menu component
