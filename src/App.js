@@ -4,8 +4,8 @@ import ImgGallery from './components/gallery/img-gallery';
 import Header from './components/header/header';
 import Footer from './components/footer/footer';
 import Navigation from './components/navbar/navigation';
-import HomePage from './components/pages/home-page';
-import UnderConstruction from './components/under-construction';
+import HomePage from './components/pages/home/home-page';
+import UnderConstruction from './components/pages/misc/under-construction';
 import { Switch, Route, withRouter } from 'react-router-dom';
 import Firebase from './config';
 
