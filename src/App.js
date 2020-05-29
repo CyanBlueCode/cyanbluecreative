@@ -13,8 +13,14 @@ const App = () => {
   const [message, toggleMessage] = useState(false);
   const [photos, setPhotos] = useState('not working');
 
-  // TODO: make firebase call into a helper fn then call from
-  // individual apps. else, db only loads on homepage
+  // TODO: create title banner
+  // TODO: create useEffect calls to gallery db
+  // TODO: store gallery obj in local photo state
+  // TODO: create gallery & lightbox
+  // TODO: add scroll to top button
+
+
+  // TODO: create call for homepage gallery here
   const database = Firebase.database().ref('photos');
 
   useEffect(() => {

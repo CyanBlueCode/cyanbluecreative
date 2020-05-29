@@ -9,6 +9,7 @@
 - contact form modal
   - feature: user img upload
 - footer component
+- create simple publit.io json to img-gallery/firebase json formatting tool
 
 [ Resources ]
 react-lazyload
