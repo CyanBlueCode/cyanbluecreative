@@ -20,6 +20,13 @@ const App = () => {
   // TODO: store gallery obj in local photo state
   // TODO: create gallery & lightbox
   // TODO: add scroll to top button
+<<<<<<< HEAD
+=======
+
+
+  // TODO: create call for homepage gallery here
+  const database = Firebase.database().ref('photos');
+>>>>>>> 29014aa (Gallery data structure config + sample responsive gallery setup)
 
   // // TODO: create call for homepage gallery here
   // const database = Firebase.database().ref('photos/portraits');
