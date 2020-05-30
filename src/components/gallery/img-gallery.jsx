@@ -8,7 +8,7 @@ import { portraits3840, portraits2048, portraits1024 } from '../photos';
 const ImgGallery = (props) => {
   const [currentImage, setCurrentImage] = useState(0);
   const [viewerIsOpen, setViewerIsOpen] = useState(false);
-  const [nodeLimit, setNodeLimit] = useState(1);
+  const [nodeLimit, setNodeLimit] = useState(2);
   const [isRetina, setIsRetina] = useState(false);
 
   const openLightbox = useCallback((event, { photo, index }) => {
@@ -38,8 +38,10 @@ const ImgGallery = (props) => {
       setNodeLimit(1);
     } else if (viewportWidth <= 767) {
       setNodeLimit(2);
-    } else {
+    } else if (viewportWidth <= 2048) {
       setNodeLimit(3);
+    } else {
+      setNodeLimit(4)
     }
     if (
       window.devicePixelRatio > 1 ||
