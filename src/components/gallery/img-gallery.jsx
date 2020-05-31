@@ -30,6 +30,7 @@ const ImgGallery = (props) => {
   }, []);
 
   // TODO: consider separating viewportWidth and isRetina calculations
+  // TODO: need more conditionals to render 1024p imgs for retina screens <= 512px
 
   const viewportCalc = () => {
     const viewportWidth = window.innerWidth;
