@@ -1,17 +1,18 @@
 import React, { useState, useEffect } from 'react';
 import './App.css';
-import ImgGallery from './components/gallery/img-gallery';
+import ImgGallery from './components/pages/photo/img-gallery';
 import Header from './components/header/header';
 import Footer from './components/footer/footer';
 import Navigation from './components/navbar/navigation';
 import HomePage from './components/pages/home/home-page';
+import PeoplePortfolio from './components/pages/photo/people-portfolio';
 import UnderConstruction from './components/pages/misc/under-construction';
 import { Switch, Route, withRouter } from 'react-router-dom';
 import Firebase from './config';
 
 const App = () => {
-  const [message, toggleMessage] = useState(false);
-  const [photos, setPhotos] = useState('not working');
+  const [message, toggleMessage] = useState(true);
+  const [photos, setPhotos] = useState('loading...');
 
   // TODO: create title banner
   // TODO: create useEffect calls to gallery db
@@ -20,16 +21,16 @@ const App = () => {
   // TODO: add scroll to top button
 
 
-  // TODO: create call for homepage gallery here
-  const database = Firebase.database().ref('photos');
+  // // TODO: create call for homepage gallery here
+  // const database = Firebase.database().ref('photos/portraits');
 
-  useEffect(() => {
-    database.on('value', (snap) => {
-      setPhotos(snap.val());
-    });
-  }, []);
+  // useEffect(() => {
+  //   database.on('value', (snap) => {
+  //     setPhotos(snap.val());
+  //   });
+  // }, []);
 
-  console.log('=>', photos);
+  // console.log('=>', photos);
 
   return (
     <div>
@@ -48,6 +49,7 @@ const App = () => {
           render={(props) => <ImgGallery {...props} photos={photos} />}
         /> */}
         <Route path="/header" component={Header} />
+        <Route path="/people" component={PeoplePortfolio} />
       </Switch>
       {/* </div> */}
       {/* )} */}
