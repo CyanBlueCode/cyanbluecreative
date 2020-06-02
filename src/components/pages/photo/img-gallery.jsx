@@ -23,7 +23,8 @@ const ImgGallery = ({ isRetina, photos4k, nodeLimit }) => {
   };
 
   const transformPhotoRes = (photoSet, resolution) => {
-    return photoSet.map((photo) => {
+    return photoSet && photoSet.map((photo) => {
+      // TODO: parsing not working correctly for images w/ 'edit'; fix prefix
       const prefix = photo.src.slice(0, -23);
       const title = photo.title.slice(0, -9);
       const src1k = `${prefix}/${resolution}/${title}-${resolution}p-80.jpg`;
@@ -32,10 +33,12 @@ const ImgGallery = ({ isRetina, photos4k, nodeLimit }) => {
   };
 
   useEffect(() => {
+    if (!isRetina) {
+      const photoSet1k = transformPhotoRes(photos4k, 1024);
+      setPhotos1k(photoSet1k);
+    }
     const photoSet2k = transformPhotoRes(photos4k, 2048);
     setPhotos2k(photoSet2k);
-    const photoSet1k = transformPhotoRes(photos4k, 1024);
-    setPhotos2k(photoSet1k);
   }, []);
   // const photoSet2k = photos4k && transformPhotoRes(photos4k, 2048);
   // const photoSet1k = photos4k && transformPhotoRes(photos4k, 1024);
@@ -97,7 +100,7 @@ const ImgGallery = ({ isRetina, photos4k, nodeLimit }) => {
         <Gallery
           photos={isRetina ? photos2k : photos1k}
           onClick={openLightbox}
-          targetRowHeight={720}
+          targetRowHeight={700}
           direction="row"
           // TODO: make limitNodeSearch conditional to viewport size?
           limitNodeSearch={nodeLimit}

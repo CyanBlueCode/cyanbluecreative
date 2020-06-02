@@ -130,7 +130,7 @@ const PeoplePortfolio = (props) => {
     return;
   };
 
-  // useEvent('resize', () => viewportCalc());
+  useEvent('resize', () => viewportCalc());
 
   // console.log('4k=>', photos4k && photos4k);
   // console.log('1k=>', photos1k);
