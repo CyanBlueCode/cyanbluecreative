@@ -130,6 +130,7 @@ const PeoplePortfolio = (props) => {
     return;
   };
 
+  // https://atomizedobjects.com/blog/react/add-event-listener-react-hooks/
   useEvent('resize', () => viewportCalc());
 
   // console.log('4k=>', photos4k && photos4k);
