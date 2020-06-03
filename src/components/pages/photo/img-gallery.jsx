@@ -1,10 +1,13 @@
 import React, { useState, useEffect, useCallback } from 'react';
+import useEvent from '../../helpers/useEvent';
 import Gallery from 'react-photo-gallery';
 import Carousel, { Modal, ModalGateway } from 'react-images';
 
-const ImgGallery = ({ isRetina, photos4k, nodeLimit }) => {
+const ImgGallery = ({ photos4k }) => {
   const [currentImage, setCurrentImage] = useState(0);
   const [viewerIsOpen, setViewerIsOpen] = useState(false);
+  const [nodeLimit, setNodeLimit] = useState(2);
+  const [isRetina, setIsRetina] = useState(false);
   const [photos2k, setPhotos2k] = useState();
   const [photos1k, setPhotos1k] = useState();
 
@@ -19,16 +22,25 @@ const ImgGallery = ({ isRetina, photos4k, nodeLimit }) => {
   };
 
   const transformPhotoRes = (photoSet, resolution) => {
-    return photoSet && photoSet.map((photo) => {
-      // TODO: parsing not working correctly for images w/ 'edit'; fix prefix
-      const prefix = photo.src.slice(0, -23);
-      const title = photo.title.slice(0, -9);
-      const src1k = `${prefix}/${resolution}/${title}-${resolution}p-80.jpg`;
-      return { ...photo, src: src1k, title: `${title}-${resolution}p-80` };
-    });
+    return (
+      photoSet &&
+      photoSet.map((photo) => {
+        const prefix = 'https://media.publit.io/file';
+        const splitSrc = photo.src.split('/');
+        const folder = splitSrc[4];
+        const fileName = splitSrc[6].slice(0, -13);
+        const transformedSrc = `${prefix}/${folder}/${resolution}/${fileName}-${resolution}p-80.jpg`;
+        return {
+          ...photo,
+          src: transformedSrc,
+          title: `${fileName}-${resolution}p-80`,
+        };
+      })
+    );
   };
 
   useEffect(() => {
+    viewportCalc();
     if (!isRetina) {
       const photoSet1k = transformPhotoRes(photos4k, 1024);
       setPhotos1k(photoSet1k);
@@ -40,6 +52,43 @@ const ImgGallery = ({ isRetina, photos4k, nodeLimit }) => {
   console.log('1111=>', photos1k);
   console.log('2222=>', photos2k);
   console.log('=x=>', photos4k && photos4k);
+
+  // TODO: implement lazy loading with .slice to divide images into sections
+  // TODO: useEvent to attach listeners or intersection observer
+  // https://developers.google.com/web/fundamentals/performance/lazy-loading-guidance/images-and-video
+  // https://medium.com/the-non-traditional-developer/how-to-use-an-intersectionobserver-in-a-react-hook-9fb061ac6cb5
+
+  // TODO: consider separating viewportWidth and isRetina calculations
+  // TODO: need more conditionals to render 1024p imgs for retina screens <= 512px
+
+  // TODO: abstract viewportCalc into a helper? what to do with states? split into 2 functions? return array?
+  const viewportCalc = () => {
+    const viewportWidth = window.innerWidth;
+    console.log('=>', viewportWidth);
+    if (viewportWidth <= 479) {
+      setNodeLimit(1);
+    } else if (viewportWidth <= 767) {
+      setNodeLimit(2);
+    } else if (viewportWidth <= 2048) {
+      setNodeLimit(3);
+    } else {
+      setNodeLimit(4);
+    }
+    if (
+      (viewportWidth >= 512 && window.devicePixelRatio > 1) ||
+      (viewportWidth >= 512 &&
+        window.matchMedia &&
+        window.matchMedia(
+          '(-webkit-min-device-pixel-ratio: 1.5),(-moz-min-device-pixel-ratio: 1.5),(min-device-pixel-ratio: 1.5)'
+        ).matches)
+    ) {
+      setIsRetina(true);
+    }
+    return;
+  };
+
+  // https://atomizedobjects.com/blog/react/add-event-listener-react-hooks/
+  useEvent('resize', () => viewportCalc());
 
   return (
     <div>
@@ -67,7 +116,11 @@ const ImgGallery = ({ isRetina, photos4k, nodeLimit }) => {
               /> */}
               <img
                 src={photos4k[currentImage].src}
-                style={{ objectFit: 'contain', width:'100vw', height: '100vw' }}
+                style={{
+                  objectFit: 'contain',
+                  width: '100vw',
+                  height: '100vw',
+                }}
                 alt={photos4k[currentImage].title}
                 onClick={closeLightbox}
               />
