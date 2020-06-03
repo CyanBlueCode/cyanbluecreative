@@ -21,6 +21,8 @@ const ImgGallery = ({ photos4k }) => {
     setViewerIsOpen(false);
   };
 
+  // TODO: implement shouldcomponentupdate hook to prevent re-render when exiting from lightbox
+
   const transformPhotoRes = (photoSet, resolution) => {
     return (
       photoSet &&
@@ -33,7 +35,8 @@ const ImgGallery = ({ photos4k }) => {
         return {
           ...photo,
           src: transformedSrc,
-          title: `${fileName}-${resolution}p-80`,
+          // title: `${fileName}-${resolution}p-80`,
+          title: '© Cyan Blue Creative',
         };
       })
     );
@@ -90,6 +93,28 @@ const ImgGallery = ({ photos4k }) => {
   // https://atomizedobjects.com/blog/react/add-event-listener-react-hooks/
   useEvent('resize', () => viewportCalc());
 
+  function doSomething(scrollPos) {
+    const viewportHeight = window.innerHeight;
+    if (scrollPos >= viewportHeight) {
+      console.log('SCROLLLL=>', scrollPos);
+    }
+  }
+  useEvent('scroll', (e) => {
+    const scrollPos = window.scrollY;
+    let ticking = false;
+    if (!ticking) {
+      window.requestAnimationFrame(() => {
+        doSomething(scrollPos);
+        ticking = false;
+      });
+
+      ticking = true;
+    }
+  });
+
+  // Disable right-click menu
+  useEvent('contextmenu', (e) => e.preventDefault());
+
   return (
     <div>
       {(photos1k || photos2k) && (
@@ -120,6 +145,7 @@ const ImgGallery = ({ photos4k }) => {
                   objectFit: 'contain',
                   width: '100vw',
                   height: '100vw',
+                  margin: '1%'
                 }}
                 alt={photos4k[currentImage].title}
                 onClick={closeLightbox}
