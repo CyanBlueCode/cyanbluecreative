@@ -1,7 +1,7 @@
-import React from 'react';
+// import React from 'react';
 
-const AnimalsPortfolio = () => {
-  return ( <div>AnimalsPortfolio</div> );
-}
+// const AnimalsPortfolio = () => {
+//   return ( <div>AnimalsPortfolio</div> );
+// }
  
-export default AnimalsPortfolio;
+// export default AnimalsPortfolio;

@@ -1,19 +1,19 @@
 import React, { useState, useEffect } from 'react';
 import './App.css';
-import ImgGallery from './components/pages/photo/img-gallery';
-import Header from './components/header/header';
+// import ImgGallery from './components/pages/photo/img-gallery';
+// import Header from './components/header/header';
 import Footer from './components/footer/footer';
-import Navigation from './components/navbar/navigation';
-import HomePage from './components/pages/home/home-page';
-import PeoplePortfolio from './components/pages/photo/people-portfolio';
+// import Navigation from './components/navbar/navigation';
+// import HomePage from './components/pages/home/home-page';
+// import PeoplePortfolio from './components/pages/photo/people-portfolio';
 import CantBreathe from './components/pages/photo/cant-breathe'
 import UnderConstruction from './components/pages/misc/under-construction';
 import { Switch, Route, withRouter } from 'react-router-dom';
-import Firebase from './config';
+// import Firebase from './config';
 
 const App = () => {
-  const [message, toggleMessage] = useState(true);
-  const [photos, setPhotos] = useState('loading...');
+  // const [message, toggleMessage] = useState(true);
+  // const [photos, setPhotos] = useState('loading...');
 
   // TODO: create title banner
   // TODO: create useEffect calls to gallery db
