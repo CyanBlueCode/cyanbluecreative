@@ -6,6 +6,7 @@ import Footer from './components/footer/footer';
 import Navigation from './components/navbar/navigation';
 import HomePage from './components/pages/home/home-page';
 import PeoplePortfolio from './components/pages/photo/people-portfolio';
+import CantBreathe from './components/pages/photo/cant-breathe'
 import UnderConstruction from './components/pages/misc/under-construction';
 import { Switch, Route, withRouter } from 'react-router-dom';
 import Firebase from './config';
@@ -38,23 +39,23 @@ const App = () => {
       {/* <UnderConstruction /> */}
       {/* ) : ( */}
       {/* <div style={{ margin: '5px' }}> */}
-      <Header />
+      {/* <Header /> */}
       <Switch>
         <Route exact path="/" component={UnderConstruction} />
-        <Route path="/home" component={HomePage} />
+        <Route path="/cantbreathe" component={CantBreathe} />
+        {/* <Route path="/home" component={HomePage} /> */}
         {/* <Route path="/navi" component={Navigation} /> */}
-        <Route path="/gallery" component={ImgGallery} />
+        {/* <Route path="/gallery" component={ImgGallery} /> */}
         {/* <Route
           path="/gallery"
           render={(props) => <ImgGallery {...props} photos={photos} />}
         /> */}
-        <Route path="/header" component={Header} />
-        <Route path="/people" component={PeoplePortfolio} />
+        {/* <Route path="/header" component={Header} />
+        <Route path="/people" component={PeoplePortfolio} /> */}
       </Switch>
       {/* </div> */}
       {/* )} */}
       <div style={{ textAlign: 'center', marginTop: '15px' }}>
-        <button onClick={() => toggleMessage(!message)}>♥️</button>
         <Footer />
       </div>
     </div>

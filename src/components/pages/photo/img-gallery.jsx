@@ -2,6 +2,7 @@ import React, { useState, useEffect, useCallback } from 'react';
 import useEvent from '../../helpers/useEvent';
 import Gallery from 'react-photo-gallery';
 import Carousel, { Modal, ModalGateway } from 'react-images';
+import ImgsViewer from 'react-images-viewer';
 
 const ImgGallery = ({ photos4k }) => {
   const [currentImage, setCurrentImage] = useState(0);
@@ -17,7 +18,7 @@ const ImgGallery = ({ photos4k }) => {
   }, []);
 
   const closeLightbox = () => {
-    setCurrentImage(0);
+    // setCurrentImage(0);
     setViewerIsOpen(false);
   };
 
@@ -36,7 +37,7 @@ const ImgGallery = ({ photos4k }) => {
           ...photo,
           src: transformedSrc,
           // title: `${fileName}-${resolution}p-80`,
-          title: '© Cyan Blue Creative',
+          title: '©CyanBlueCreative',
         };
       })
     );
@@ -52,9 +53,9 @@ const ImgGallery = ({ photos4k }) => {
     setPhotos2k(photoSet2k);
   }, []);
 
-  console.log('1111=>', photos1k);
-  console.log('2222=>', photos2k);
-  console.log('=x=>', photos4k && photos4k);
+  // console.log('1111=>', photos1k);
+  // console.log('2222=>', photos2k);
+  // console.log('=x=>', photos4k && photos4k);
 
   // TODO: implement lazy loading with .slice to divide images into sections
   // TODO: useEvent to attach listeners or intersection observer
@@ -93,27 +94,30 @@ const ImgGallery = ({ photos4k }) => {
   // https://atomizedobjects.com/blog/react/add-event-listener-react-hooks/
   useEvent('resize', () => viewportCalc());
 
-  function doSomething(scrollPos) {
-    const viewportHeight = window.innerHeight;
-    if (scrollPos >= viewportHeight) {
-      console.log('SCROLLLL=>', scrollPos);
-    }
-  }
-  useEvent('scroll', (e) => {
-    const scrollPos = window.scrollY;
-    let ticking = false;
-    if (!ticking) {
-      window.requestAnimationFrame(() => {
-        doSomething(scrollPos);
-        ticking = false;
-      });
+  // function doSomething(scrollPos) {
+  //   const viewportHeight = window.innerHeight;
+  //   if (scrollPos >= viewportHeight) {
+  //     console.log('SCROLLLL=>', scrollPos);
+  //   }
+  // }
+  // useEvent('scroll', (e) => {
+  //   const scrollPos = window.scrollY;
+  //   let ticking = false;
+  //   if (!ticking) {
+  //     window.requestAnimationFrame(() => {
+  //       doSomething(scrollPos);
+  //       ticking = false;
+  //     });
 
-      ticking = true;
-    }
-  });
+  //     ticking = true;
+  //   }
+  // });
 
   // Disable right-click menu
-  useEvent('contextmenu', (e) => e.preventDefault());
+  // useEvent('contextmenu', (e) => e.preventDefault());
+
+  const onPrev = () => setCurrentImage(currentImage - 1);
+  const onNext = () => setCurrentImage(currentImage + 1);
 
   return (
     <div>
@@ -126,34 +130,18 @@ const ImgGallery = ({ photos4k }) => {
           limitNodeSearch={nodeLimit}
         />
       )}
-      {photos2k && (
-        <ModalGateway>
-          {viewerIsOpen ? (
-            <Modal onClose={closeLightbox}>
-              {/* TODO: lightbox currently loads all photos on open. not cool. solve */}
-              {/* <Carousel
-                currentIndex={currentImage}
-                views={(isRetina ? photos4k : photos2k).map((x) => ({
-                  ...x,
-                  srcset: x.srcSet,
-                  caption: x.description,
-                }))}
-              /> */}
-              <img
-                src={photos4k[currentImage].src}
-                style={{
-                  objectFit: 'contain',
-                  width: '100vw',
-                  height: '100vw',
-                  margin: '1%'
-                }}
-                alt={photos4k[currentImage].title}
-                onClick={closeLightbox}
-              />
-            </Modal>
-          ) : null}
-        </ModalGateway>
-      )}
+      {photos2k && <ImgsViewer
+        imgs={(isRetina ? photos4k : photos2k).map((x) => ({
+          ...x,
+          srcset: [],
+          caption: x.description,
+        }))}
+        isOpen={viewerIsOpen}
+        currImg={currentImage}
+        onClickPrev={onPrev}
+        onClickNext={onNext}
+        onClose={closeLightbox}
+      />}
     </div>
   );
 };
