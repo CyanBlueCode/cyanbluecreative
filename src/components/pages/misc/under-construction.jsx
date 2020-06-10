@@ -1,6 +1,6 @@
 import React from 'react';
 
-const UnderConstruction = () => {
+const UnderConstruction = ({ toggleMessage }) => {
   return (
     <div>
       <div className="App">
@@ -8,11 +8,14 @@ const UnderConstruction = () => {
           <h1>
             <b>CYAN BLUE CREATIVE</b>
           </h1>
-          <small>☕ Currently Undergoing Upgrades ☕</small>
+          <small>
+            ☕ The Rest of My Portfolio is Currently Undergoing Updates. Check
+            Back Soon. ☕
+          </small>
         </header>
       </div>
       <div style={{ textAlign: 'center', marginTop: '15px' }}>
-        <a href="/cantbreathe" style={{ textDecoration: 'none' }}>
+        <a style={{ cursor: 'pointer' }} onClick={() => toggleMessage(false)}>
           <span role="img">♥️</span>
         </a>
       </div>

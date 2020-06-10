@@ -7,7 +7,7 @@ const Header = (props) => {
       <div>
         <h1>JUNE 2020 | AUSTIN, TX</h1>
         <h5>
-        This is a special page in support of the ongoing anti-police brutality
+        This is a special temporary page in support of the ongoing anti-police brutality
         protests across the world.
       </h5>
       </div>

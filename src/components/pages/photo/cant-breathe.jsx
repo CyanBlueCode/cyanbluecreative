@@ -4,7 +4,7 @@ import Firebase from '../../../config';
 import ImgGallery from './img-gallery';
 import Header from '../../header/header';
 
-const CantBreathe = (props) => {
+const CantBreathe = ({toggleMessage}) => {
   const [photos4k, setPhotos4k] = useState();
 
   useEffect(() => {
@@ -27,7 +27,7 @@ const CantBreathe = (props) => {
       {photos4k && <ImgGallery photos4k={photos4k} />}
       <div style={{ textAlign: 'center', marginTop: '15px' }}>
       <h5>POWER TO THE PEOPLE</h5>
-        <a href="/" style={{ textDecoration: 'none' }}>
+      <a style={{ cursor: 'pointer' }} onClick={() => toggleMessage(true)}>
           <span role="img">♥️</span>
         </a>
       </div>
