@@ -9,7 +9,7 @@ const Footer = () => {
         </small>
         <br/>
         <br/>
-        <small>The rest of my portfolio is currently undergoing updates & will be back soon.</small>
+        <small>The rest of my portfolio is undergoing updates & will be back soon.</small>
         <br/>
         <small>For photo/film bookings, contact me: <a href="mailto:chase@cyanbluecreative.com">chase@cyanbluecreative.com</a></small>
       </h5>

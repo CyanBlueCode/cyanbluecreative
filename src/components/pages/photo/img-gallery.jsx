@@ -12,6 +12,8 @@ const ImgGallery = ({ photos4k }) => {
   const [photos2k, setPhotos2k] = useState();
   const [photos1k, setPhotos1k] = useState();
 
+  console.log('=>', photos2k);
+
   const openLightbox = useCallback((event, { photo, index }) => {
     setCurrentImage(index);
     setViewerIsOpen(true);
@@ -33,6 +35,7 @@ const ImgGallery = ({ photos4k }) => {
         const folder = splitSrc[4];
         const fileName = splitSrc[6].slice(0, -13);
         const transformedSrc = `${prefix}/${folder}/${resolution}/${fileName}-${resolution}p-80.jpg`;
+        console.log('file name=>', transformedSrc);
         return {
           ...photo,
           src: transformedSrc,
@@ -46,10 +49,10 @@ const ImgGallery = ({ photos4k }) => {
   useEffect(() => {
     viewportCalc();
     if (!isRetina) {
-      const photoSet1k = transformPhotoRes(photos4k, 1024);
+      const photoSet1k = photos4k && transformPhotoRes(photos4k, 1024);
       setPhotos1k(photoSet1k);
     }
-    const photoSet2k = transformPhotoRes(photos4k, 2048);
+    const photoSet2k = photos4k && transformPhotoRes(photos4k, 2048);
     setPhotos2k(photoSet2k);
   }, []);
 
@@ -68,13 +71,13 @@ const ImgGallery = ({ photos4k }) => {
   // TODO: abstract viewportCalc into a helper? what to do with states? split into 2 functions? return array?
   const viewportCalc = () => {
     const viewportWidth = window.innerWidth;
-    console.log('=>', viewportWidth);
+    // console.log('=>', viewportWidth);
     if (viewportWidth <= 479) {
       setNodeLimit(1);
     } else if (viewportWidth <= 767) {
       setNodeLimit(2);
     } else if (viewportWidth <= 2048) {
-      setNodeLimit(3);
+      setNodeLimit(2);
     } else {
       setNodeLimit(4);
     }
@@ -130,18 +133,33 @@ const ImgGallery = ({ photos4k }) => {
           limitNodeSearch={nodeLimit}
         />
       )}
-      {photos2k && <ImgsViewer
-        imgs={(isRetina ? photos4k : photos2k).map((x) => ({
-          ...x,
-          srcset: [],
-          caption: x.description,
-        }))}
-        isOpen={viewerIsOpen}
-        currImg={currentImage}
-        onClickPrev={onPrev}
-        onClickNext={onNext}
-        onClose={closeLightbox}
-      />}
+      {photos2k && (
+        <ImgsViewer
+          imgs={(isRetina ? photos4k : photos2k).map((x) => ({
+            ...x,
+            srcset: [],
+            caption: x.description,
+          }))}
+          isOpen={viewerIsOpen}
+          currImg={currentImage}
+          onClickPrev={onPrev}
+          onClickNext={onNext}
+          onClose={closeLightbox}
+          closeBtnTitle="Close"
+          backdropCloseable={false}
+          leftArrowTitle="Prev"
+          rightArrowTitle="Next"
+          width={3840}
+          onClickImg={() =>
+            window.open(
+              photos2k[currentImage].src,
+              'Image',
+            )
+          }
+          showThumbnails={true}
+          onClickThumbnail={i => setCurrentImage(i)}
+        />
+      )}
     </div>
   );
 };
