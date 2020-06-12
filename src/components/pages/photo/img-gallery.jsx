@@ -12,7 +12,7 @@ const ImgGallery = ({ photos4k }) => {
   const [photos2k, setPhotos2k] = useState();
   const [photos1k, setPhotos1k] = useState();
 
-  console.log('=>', photos2k);
+  // console.log('=>', photos2k);
 
   const openLightbox = useCallback((event, { photo, index }) => {
     setCurrentImage(index);
@@ -35,7 +35,7 @@ const ImgGallery = ({ photos4k }) => {
         const folder = splitSrc[4];
         const fileName = splitSrc[6].slice(0, -13);
         const transformedSrc = `${prefix}/${folder}/${resolution}/${fileName}-${resolution}p-80.jpg`;
-        console.log('file name=>', transformedSrc);
+        // console.log('file name=>', transformedSrc);
         return {
           ...photo,
           src: transformedSrc,
