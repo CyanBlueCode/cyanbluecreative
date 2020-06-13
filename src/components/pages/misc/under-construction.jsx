@@ -9,11 +9,11 @@ const UnderConstruction = ({ toggleMessage }) => {
             <b>CYAN BLUE CREATIVE</b>
           </h1>
           <small>
-            ☕ My Regular Portfolio is Currently Undergoing Updates & Will Be
+            ☕ My Portfolio is Currently Undergoing Updates & Will Be
             Back Soon ☕
-            <br/>
-            <br/>
+            <h5>
             ✊ <a style={{ cursor: 'pointer', textDecoration: 'none', color: 'inherit' }} href='/cantbreathe'>Click Here for a Special Temporary Page</a> ✊
+            </h5>
           </small>
         </header>
       </div>
