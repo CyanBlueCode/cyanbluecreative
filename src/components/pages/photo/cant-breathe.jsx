@@ -27,7 +27,10 @@ const CantBreathe = ({toggleMessage}) => {
       {photos4k && <ImgGallery photos4k={photos4k} />}
       <div style={{ textAlign: 'center', marginTop: '15px' }}>
       <h5>POWER TO THE PEOPLE</h5>
-      <a style={{ cursor: 'pointer' }} onClick={() => toggleMessage(true)}>
+      {/* <a style={{ cursor: 'pointer' }} onClick={() => toggleMessage(true)}>
+          <span role="img">♥️</span>
+        </a> */}
+        <a style={{ cursor: 'pointer', textDecoration: 'none' }} href='/'>
           <span role="img">♥️</span>
         </a>
       </div>

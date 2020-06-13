@@ -40,9 +40,9 @@ const App = () => {
       {/* <div style={{ margin: '5px' }}> */}
       {/* <Header /> */}
       {/* <HashRouter basename="/"> */}
-        {/* <Switch> */}
-          {/* <Route exact path="/" component={UnderConstruction} /> */}
-          {/* <Route exact path="/cantbreathe" component={CantBreathe} /> */}
+        <Switch>
+          <Route exact path="/" component={UnderConstruction} />
+          <Route path="/cantbreathe" component={CantBreathe} />
           {/* <Route path="/home" component={HomePage} /> */}
           {/* <Route path="/navi" component={Navigation} /> */}
           {/* <Route path="/gallery" component={ImgGallery} /> */}
@@ -52,11 +52,11 @@ const App = () => {
         /> */}
           {/* <Route path="/header" component={Header} />
         <Route path="/people" component={PeoplePortfolio} /> */}
-        {/* </Switch> */}
+        </Switch>
       {/* </HashRouter> */}
       {/* </div> */}
       {/* )} */}
-      { !message ? <CantBreathe toggleMessage={toggleMessage}/> : <UnderConstruction toggleMessage={toggleMessage}/>}
+      {/* { !message ? <CantBreathe toggleMessage={toggleMessage}/> : <UnderConstruction toggleMessage={toggleMessage}/>} */}
 
       <div style={{ textAlign: 'center', marginTop: '15px' }}>
         <Footer />

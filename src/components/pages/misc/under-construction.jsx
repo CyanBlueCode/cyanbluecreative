@@ -9,13 +9,19 @@ const UnderConstruction = ({ toggleMessage }) => {
             <b>CYAN BLUE CREATIVE</b>
           </h1>
           <small>
-            ☕ The Rest of My Portfolio is Currently Undergoing Updates. Check
-            Back Soon. ☕
+            ☕ My Regular Portfolio is Currently Undergoing Updates & Will Be
+            Back Soon ☕
+            <br/>
+            <br/>
+            ✊ <a style={{ cursor: 'pointer', textDecoration: 'none', color: 'inherit' }} href='/cantbreathe'>Click Here for a Special Temporary Page</a> ✊
           </small>
         </header>
       </div>
       <div style={{ textAlign: 'center', marginTop: '15px' }}>
-        <a style={{ cursor: 'pointer' }} onClick={() => toggleMessage(false)}>
+        {/* <a style={{ cursor: 'pointer' }} onClick={() => toggleMessage(false)}>
+          <span role="img">♥️</span>
+        </a> */}
+        <a style={{ cursor: 'pointer', textDecoration: 'none' }} href='/cantbreathe'>
           <span role="img">♥️</span>
         </a>
       </div>
