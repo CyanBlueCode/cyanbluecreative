@@ -122,6 +122,8 @@ const ImgGallery = ({ photos4k }) => {
   const onPrev = () => setCurrentImage(currentImage - 1);
   const onNext = () => setCurrentImage(currentImage + 1);
 
+  console.log('photos2k=>', photos2k);
+
   return (
     <div>
       {(photos1k || photos2k) && (
@@ -136,8 +138,9 @@ const ImgGallery = ({ photos4k }) => {
       {photos2k && (
         <ImgsViewer
           imgs={(isRetina ? photos4k : photos2k).map((x) => ({
-            ...x,
-            srcset: [],
+            // ...x,
+            // TODO: no need to use .map here, just pass gallery as srcset
+            srcset: photos2k,
             caption: x.description,
           }))}
           isOpen={viewerIsOpen}
@@ -150,12 +153,12 @@ const ImgGallery = ({ photos4k }) => {
           leftArrowTitle="Prev"
           rightArrowTitle="Next"
           width={3840}
-          onClickImg={() =>
-            window.open(
-              photos2k[currentImage].src,
-              'Image',
-            )
-          }
+          // onClickImg={() =>
+          //   window.open(
+          //     photos2k[currentImage].src,
+          //     'Image',
+          //   )
+          // }
           showThumbnails={true}
           onClickThumbnail={i => setCurrentImage(i)}
         />

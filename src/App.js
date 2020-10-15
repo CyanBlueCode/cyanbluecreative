@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import './App.css';
-// import ImgGallery from './components/pages/photo/img-gallery';
-// import Header from './components/header/header';
+import ImgGallery from './components/pages/photo/img-gallery';
+import Header from './components/header/header';
 import Footer from './components/footer/footer';
-// import Navigation from './components/navbar/navigation';
+import Navigation from './components/navbar/navigation';
 // import HomePage from './components/pages/home/home-page';
-// import PeoplePortfolio from './components/pages/photo/people-portfolio';
+import PeoplePortfolio from './components/pages/photo/people-portfolio';
 import CantBreathe from './components/pages/photo/cant-breathe';
 import UnderConstruction from './components/pages/misc/under-construction';
 import { Switch, Route, withRouter, HashRouter } from 'react-router-dom';
@@ -44,14 +44,14 @@ const App = () => {
           <Route exact path="/" component={UnderConstruction} />
           <Route path="/cantbreathe" component={CantBreathe} />
           {/* <Route path="/home" component={HomePage} /> */}
-          {/* <Route path="/navi" component={Navigation} /> */}
-          {/* <Route path="/gallery" component={ImgGallery} /> */}
+          <Route path="/navi" component={Navigation} />
+          <Route path="/gallery" component={ImgGallery} />
           {/* <Route
           path="/gallery"
           render={(props) => <ImgGallery {...props} photos={photos} />}
         /> */}
-          {/* <Route path="/header" component={Header} />
-        <Route path="/people" component={PeoplePortfolio} /> */}
+          <Route path="/header" component={Header} />
+        <Route path="/people" component={PeoplePortfolio} />
         </Switch>
       {/* </HashRouter> */}
       {/* </div> */}
