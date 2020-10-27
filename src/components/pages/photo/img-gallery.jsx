@@ -26,6 +26,7 @@ const ImgGallery = ({ photos4k }) => {
 
   // TODO: implement shouldcomponentupdate hook to prevent re-render when exiting from lightbox
 
+  // TODO: update transformPhotoRes; currently doesn't work w/ firebase(?)
   const transformPhotoRes = (photoSet, resolution) => {
     return (
       photoSet &&
@@ -96,6 +97,33 @@ const ImgGallery = ({ photos4k }) => {
 
   // https://atomizedobjects.com/blog/react/add-event-listener-react-hooks/
   useEvent('resize', () => viewportCalc());
+  
+
+  // This contraption below is for performing actions on scroll down event (down is only triggered when scrolling
+  // past the lowest point ever scrolled), intended for lazy lazy loading; this is hacky but it works for this purpose
+
+  // NOTE: preScrollY var must be outside of useEvent's scope
+  let prevScrollY = window.scrollY;
+  useEvent('scroll', (x) => {
+  
+    console.log('=>', prevScrollY);
+    console.log('=>', window.scrollY);
+    
+    if(window.scrollY > prevScrollY){
+      prevScrollY = window.scrollY;
+      console.log('=>', 'DOWN');
+      // scroll certain distance, add more photos to list? make sure does not cause a bunch of re-renders 
+    } else {
+      console.log('=>', 'UP');
+      // TODO: remove this else if not doing anything w/ it
+    }
+
+  });
+
+
+  const lazyLoad = () => {
+
+  }
 
   // function doSomething(scrollPos) {
   //   const viewportHeight = window.innerHeight;
