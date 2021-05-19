@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import Firebase from '../../../config';
 // import useEvent from '../../helpers/useEvent';
-import ImgGallery from './img-gallery';
+import ImgGallery from '../../gallery/img-gallery';
 import Header from '../../header/header';
 
 const CantBreathe = ({toggleMessage}) => {

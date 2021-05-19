@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useCallback } from 'react';
-import useEvent from '../../helpers/useEvent';
+import useEvent from '../helpers/useEvent';
 import Gallery from 'react-photo-gallery';
 import Carousel, { Modal, ModalGateway } from 'react-images';
 import ImgsViewer from 'react-images-viewer';
@@ -60,7 +60,7 @@ const ImgGallery = ({ photos4k }) => {
   // console.log('2222=>', photos2k);
   // console.log('=x=>', photos4k && photos4k);
 
-  // TODO: implement lazy loading with .slice to divide images into sections
+  // TODO: implement lazy loading with .slice to divide images into sections?
   // TODO: useEvent to attach listeners or intersection observer
   // https://developers.google.com/web/fundamentals/performance/lazy-loading-guidance/images-and-video
   // https://medium.com/the-non-traditional-developer/how-to-use-an-intersectionobserver-in-a-react-hook-9fb061ac6cb5
@@ -133,6 +133,8 @@ const ImgGallery = ({ photos4k }) => {
           limitNodeSearch={nodeLimit}
         />
       )}
+
+      {/* TODO: preloading for ImgsViewer broken, moving between images make network calls repeatedly*/}
       {photos2k && (
         <ImgsViewer
           imgs={(isRetina ? photos4k : photos2k).map((x) => ({
@@ -156,8 +158,8 @@ const ImgGallery = ({ photos4k }) => {
               'Image',
             )
           }
-          showThumbnails={true}
-          onClickThumbnail={i => setCurrentImage(i)}
+          showThumbnails={false}
+          // onClickThumbnail={i => setCurrentImage(i)}
         />
       )}
     </div>

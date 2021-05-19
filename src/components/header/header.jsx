@@ -1,5 +1,5 @@
 import React from 'react';
-// import Navigation from '../navbar/navigation';
+import Navigation from '../navbar/navigation';
 
 const Header = (props) => {
   return (
@@ -10,6 +10,9 @@ const Header = (props) => {
         This is a special temporary page in support of the ongoing anti-police brutality
         protests across the world.
       </h5>
+      </div>
+      <div>
+        <Navigation/>
       </div>
     </div>
   );

@@ -1,10 +1,12 @@
 import React from 'react';
+import NavBar from '../../header/NavBar';
 
 const UnderConstruction = ({ toggleMessage }) => {
   return (
     <div>
       <div className="App">
         <header className="App-header">
+          <NavBar />
           <h1>
             <b>CYAN BLUE CREATIVE</b>
           </h1>
