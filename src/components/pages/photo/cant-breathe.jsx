@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import Firebase from '../../../config';
 // import useEvent from '../../helpers/useEvent';
 import ImgGallery from '../../gallery/img-gallery';
+import ImageGallery from '../../gallery/ImageGallery';
 import Header from '../../header/header';
 
 const CantBreathe = ({toggleMessage}) => {
@@ -24,7 +25,8 @@ const CantBreathe = ({toggleMessage}) => {
   return (
     <div>
       <Header />
-      {photos4k && <ImgGallery photos4k={photos4k} />}
+      {/* {photos4k && <ImgGallery photos4k={photos4k} />} */}
+      {photos4k && <ImageGallery tileData={photos4k} />}
       <div style={{ textAlign: 'center', marginTop: '15px' }}>
       <h5>POWER TO THE PEOPLE</h5>
       {/* <a style={{ cursor: 'pointer' }} onClick={() => toggleMessage(true)}>
