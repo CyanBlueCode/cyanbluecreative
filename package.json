@@ -4,7 +4,9 @@
   "private": true,
   "homepage": "https://cyanbluecreative.com",
   "dependencies": {
-    "@material-ui/core": "^4.9.14",
+    "@emotion/react": "^11.4.0",
+    "@emotion/styled": "^11.3.0",
+    "@material-ui/core": "^5.0.0-beta.0",
     "@testing-library/jest-dom": "^4.2.4",
     "@testing-library/react": "^9.3.2",
     "@testing-library/user-event": "^7.1.2",

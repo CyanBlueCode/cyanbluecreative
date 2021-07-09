@@ -9,6 +9,9 @@ const Navigation = (props) => {
       <button onClick={() => props.history.push('/gallery')}>
         Gallery
       </button>
+      <button onClick={() => props.history.push('/gallery')}>
+        Gallery
+      </button>
     </div>
   );
 };

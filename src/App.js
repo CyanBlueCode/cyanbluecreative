@@ -9,6 +9,7 @@ import UnderConstruction from './components/underConstruction';
 import { Switch, Route, withRouter } from 'react-router-dom';
 import Firebase from './config';
 import ImageGridList from './components/mui-gallery';
+import MasonryImageList from './components/imgGalleryMui';
 
 const App = () => {
   const [message, toggleMessage] = useState(false);
@@ -39,6 +40,7 @@ const App = () => {
         {/* <Route path="/navi" component={Navigation} /> */}
         <Route path="/gallery" component={ImgGallery} />
         <Route path="/mui" component={ImageGridList} />
+        <Route path="/mui2" component={MasonryImageList} />
         {/* <Route
           path="/gallery"
           render={(props) => <ImgGallery {...props} photos={photos} />}
