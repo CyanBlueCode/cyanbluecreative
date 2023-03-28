@@ -1,5 +1,5 @@
 import React from 'react';
-import { Instagram, MailOutline, Home } from '@material-ui/icons';
+// import { Instagram, MailOutline, Home } from '@material-ui/icons';
 
 const Footer = () => {
   return (
@@ -26,7 +26,7 @@ const Footer = () => {
             textDecoration: 'none',
           }}
         >
-          <Home />
+          {/* <Home /> */}
         </a>
         {' '}
         <a
@@ -37,7 +37,7 @@ const Footer = () => {
             textDecoration: 'none',
           }}
         >
-          <Instagram />
+          {/* <Instagram /> */}
         </a>
         {' '}
         <a
@@ -48,7 +48,7 @@ const Footer = () => {
             textDecoration: 'none',
           }}
         >
-          <MailOutline />
+          {/* <MailOutline /> */}
         </a>
         <br />
         <br />

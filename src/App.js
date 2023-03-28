@@ -9,7 +9,7 @@ import Footer from './components/footer/footer';
 import CantBreathe from './components/pages/photo/cant-breathe';
 import UnderConstruction from './components/pages/misc/under-construction';
 import { Switch, Route, withRouter, HashRouter } from 'react-router-dom';
-// import Firebase from './config';
+import Navigation from './components/navigation/Navigation';
 
 const App = () => {
   const [message, toggleMessage] = useState(false);
@@ -34,30 +34,11 @@ const App = () => {
 
   return (
     <div>
-      {/* {message ? ( */}
-      {/* <UnderConstruction /> */}
-      {/* ) : ( */}
-      {/* <div style={{ margin: '5px' }}> */}
-      {/* <Header /> */}
-      {/* <HashRouter basename="/"> */}
+      <Navigation />
         <Switch>
           <Route exact path="/" component={UnderConstruction} />
           <Route path="/cantbreathe" component={CantBreathe} />
-          {/* <Route path="/home" component={HomePage} /> */}
-          {/* <Route path="/navi" component={Navigation} /> */}
-          {/* <Route path="/gallery" component={ImgGallery} /> */}
-          {/* <Route
-          path="/gallery"
-          render={(props) => <ImgGallery {...props} photos={photos} />}
-        /> */}
-          {/* <Route path="/header" component={Header} />
-        <Route path="/people" component={PeoplePortfolio} /> */}
         </Switch>
-      {/* </HashRouter> */}
-      {/* </div> */}
-      {/* )} */}
-      {/* { !message ? <CantBreathe toggleMessage={toggleMessage}/> : <UnderConstruction toggleMessage={toggleMessage}/>} */}
-
       <div style={{ textAlign: 'center', marginTop: '15px' }}>
         <Footer />
       </div>
