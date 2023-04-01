@@ -1,69 +1,64 @@
-// import * as React from 'react';
-// import AppBar from '@mui/material/AppBar';
-// import Box from '@mui/material/Box';
-// import Toolbar from '@mui/material/Toolbar';
-// import Typography from '@mui/material/Typography';
-// import Button from '@mui/material/Button';
-import IconButton from '@mui/material/IconButton';
+import React, { useState, useEffect, useCallback } from 'react';
+import { withRouter } from 'react-router-dom';
+import {
+  AppBar,
+  Box,
+  Button,
+  Container,
+  CssBaseline,
+  Drawer,
+  IconButton,
+  Slide,
+  Toolbar,
+  Typography,
+  useScrollTrigger,
+  Link,
+} from '@mui/material';
 import MenuIcon from '@mui/icons-material/Menu';
-// import { Link, withRouter } from 'react-router-dom';
-
-// const Navigation = (props) => {
-//   console.log('==>', props);
-//   return (
-//     <Box sx={{ flexGrow: 1 }}>
-//       <AppBar position="static">
-//         <Toolbar>
-//           <IconButton
-//             size="large"
-//             edge="start"
-//             color="inherit"
-//             aria-label="menu"
-//             sx={{ mr: 2 }}
-//           >
-//             <MenuIcon />
-//           </IconButton>
-//           <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-//             News
-//           </Typography>
-//           <Button color="inherit">Login</Button>
-//         </Toolbar>
-//       </AppBar>
-//     </Box>
-//     // <div>
-//     //   <Link to="/">HomePage</Link>
-//     //   <button onClick={() => props.history.push('/gallery')}>
-//     //     Gallery
-//     //   </button>
-//     // </div>
-//   );
-// };
-
-// export default withRouter(Navigation);
-
-import React, { useState } from 'react';
 import PropTypes from 'prop-types';
-import AppBar from '@mui/material/AppBar';
-import Toolbar from '@mui/material/Toolbar';
-import Typography from '@mui/material/Typography';
-import CssBaseline from '@mui/material/CssBaseline';
-import useScrollTrigger from '@mui/material/useScrollTrigger';
-import Box from '@mui/material/Box';
-import Container from '@mui/material/Container';
-import Slide from '@mui/material/Slide';
-import Drawer from '@mui/material/Drawer';
+import { isMobile } from '../../util/isMobile';
 
-const HideOnScroll = (props) => {
-  const { children, window } = props;
+const HideOnScroll = ({ children, window }) => {
   // Note that you normally won't need to set the window ref as useScrollTrigger
   // will default to window.
   // This is only being set here because the demo is in an iframe.
+  // const { children, window } = props;
   const trigger = useScrollTrigger({
     target: window ? window() : undefined,
   });
 
+  // NOTE new implementation makes it look like there's no animation
+  const [y, setY] = useState(document.scrollingElement.scrollHeight);
+  const [scrollingDown, setScrollingDown] = useState(false);
+
+  // const handleNavigation = useCallback(
+  //   (e) => {
+  //     if (typeof window !== 'undefined') {
+  //       if (y > window.scrollY) {
+  //         setScrollingDown(false);
+  //         // console.log('scrolling up');
+  //       } else if (y < window.scrollY) {
+  //         setScrollingDown(true);
+  //         // console.log('scrolling down');
+  //       }
+  //       setY(window.scrollY);
+  //     }
+  //   },
+  //   [y]
+  // );
+
+  // console.log('isMobile =>', isMobile());
+
+  // useEffect(() => {
+  //   window.addEventListener('scroll', handleNavigation);
+
+  //   return () => {
+  //     window.removeEventListener('scroll', handleNavigation);
+  //   };
+  // }, [handleNavigation]);
+
   return (
-    <Slide appear={false} direction='down' in={!trigger}>
+    <Slide appear={true} direction='down' in={!trigger}>
       {children}
     </Slide>
   );
@@ -74,7 +69,33 @@ HideOnScroll.propTypes = {
 };
 
 const HideAppBar = (props) => {
+  const {
+    history,
+    location: { pathname },
+  } = props;
   const [open, setOpen] = useState(false);
+  const navigationLinks = [
+    {
+      title: 'home',
+      link: '',
+    },
+    {
+      title: `can't breathe`,
+      link: 'cantbreathe',
+    },
+    {
+      title: 'gallery',
+      link: 'gallery',
+    },
+    {
+      title: 'people',
+      link: 'people',
+    },
+  ];
+
+  const isHomepage = pathname === '/';
+
+  console.log('isHomepage =>', isHomepage);
 
   return (
     <React.Fragment>
@@ -82,33 +103,25 @@ const HideAppBar = (props) => {
       <HideOnScroll {...props}>
         <AppBar
           sx={{
-            backgroundColor: 'transparent',
+            height: `${isHomepage ? '110px' : 'auto'}`,
+            backgroundColor: `${isHomepage ? 'transparent' : 'black'}`,
+            backgroundImage: 'linear-gradient(#0000004c, transparent)',
             boxShadow: 'none',
-            // zIndex: 1000,
-            // position: 'absolute'
-            // '& .MuiToolbar-root': {
-            //   position: 'absolute',
-            //   backgroundColor: 'red',
-            //   color: 'red'
-            // }
+            position: `${isHomepage ? '' : 'sticky'}`,
           }}
         >
-          <Toolbar
-          // sx={{ position: 'absolute' }}
-          // sx={{'& .MuiToolbar-root': {
-          //   position: 'absolute',
-          //   backgroundColor: 'red',
-          //   color: 'red'
-          // }}}
-          >
-            <Typography
-              variant='h4'
-              sx={{ fontWeight: 600 }}
-              component='div'
-              color='common.white'
-            >
-              CYAN BLUE CREATIVE
-            </Typography>
+          <Toolbar>
+            {/* FIXME isMobile not updating correctly */}
+            <Link href='/' underline='none'>
+              <Typography
+                variant={isMobile() ? 'h5' : 'h4'}
+                sx={{ fontWeight: 600 }}
+                component='div'
+                color='common.white'
+              >
+                CYAN BLUE CREATIVE
+              </Typography>
+            </Link>
             <IconButton
               size='large'
               edge='start'
@@ -118,14 +131,17 @@ const HideAppBar = (props) => {
             >
               <MenuIcon />
             </IconButton>
-            {/* NOTE white bg comes from Drawer-paper child */}
             <Drawer
               anchor='right'
               open={open}
               onClose={() => setOpen(false)}
               sx={{
                 backdropFilter: 'blur(3px)',
-                bgcolor: 'transparent',
+                // NOTE bg override here, but still has black frame?
+                '& .MuiDrawer-paper': {
+                  bgcolor: 'rgba(0,0,0,0.25)',
+                  backdropFilter: 'blur(3px)',
+                },
               }}
             >
               <Container
@@ -136,9 +152,25 @@ const HideAppBar = (props) => {
                   bgcolor: 'transparent',
                 }}
               >
-                <Box sx={{ my: 2, bgcolor: 'transparent', }}>
-                  {[...new Array(6)].map((_e, i) => (
-                    <li>{`Menu item ${i}`}</li>
+                <Box sx={{ my: 2, bgcolor: 'transparent' }}>
+                  {navigationLinks.map(({ title, link }) => (
+                    <Button
+                      key={link}
+                      onClick={() => {
+                        history.push(`/${link}`);
+                        setOpen(false);
+                      }}
+                      // disableRipple
+                      sx={{
+                        width: '100%',
+                        ':hover': {
+                          backgroundColor: 'transparent',
+                        },
+                        color: 'common.white',
+                      }}
+                    >
+                      <h1>{title.toUpperCase()}</h1>
+                    </Button>
                   ))}
                 </Box>
               </Container>
@@ -151,4 +183,4 @@ const HideAppBar = (props) => {
   );
 };
 
-export default HideAppBar;
+export default withRouter(HideAppBar);

@@ -2,14 +2,16 @@ import React, { useState, useEffect } from 'react';
 import './App.css';
 // import ImgGallery from './components/pages/photo/img-gallery';
 // import Header from './components/header/header';
-import Footer from './components/footer/footer';
+import Footer from './components/footer/Footer';
 // import Navigation from './components/navbar/navigation';
-// import HomePage from './components/pages/home/home-page';
+import HomePage from './components/pages/home/HomePage';
 // import PeoplePortfolio from './components/pages/photo/people-portfolio';
 import CantBreathe from './components/pages/photo/cant-breathe';
 import UnderConstruction from './components/pages/misc/under-construction';
 import { Switch, Route, withRouter, HashRouter } from 'react-router-dom';
 import Navigation from './components/navigation/Navigation';
+import Gallery from './components/pages/photo/Gallery';
+import { Box } from '@mui/material';
 
 const App = () => {
   const [message, toggleMessage] = useState(false);
@@ -33,16 +35,16 @@ const App = () => {
   // console.log('=>', photos);
 
   return (
-    <div>
+    <Box sx={{ width: '100%' }}>
       <Navigation />
-        <Switch>
-          <Route exact path="/" component={UnderConstruction} />
-          <Route path="/cantbreathe" component={CantBreathe} />
-        </Switch>
-      <div style={{ textAlign: 'center', marginTop: '15px' }}>
-        <Footer />
-      </div>
-    </div>
+      <Switch>
+        <Route exact path='/' component={HomePage} />
+        <Route exact path='/gallery' component={Gallery} />
+        <Route path='/cantbreathe' component={CantBreathe} />
+        <Route exact path='/construction' component={UnderConstruction} />
+      </Switch>
+      <Footer />
+    </Box>
   );
 };
 
