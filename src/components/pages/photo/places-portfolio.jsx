@@ -1,7 +1,7 @@
-import React from 'react';
+// import React from 'react';
 
-const PlacesPortfolio = () => {
-  return ( <div>PlacesPortfolio</div> );
-}
+// const PlacesPortfolio = () => {
+//   return ( <div>PlacesPortfolio</div> );
+// }
  
-export default PlacesPortfolio;
+// export default PlacesPortfolio;

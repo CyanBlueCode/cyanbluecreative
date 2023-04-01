@@ -1,7 +1,6 @@
 import firebase from 'firebase/app';
 import 'firebase/database';
 
-// TODO: add auth for self to update DB
 
 export const DB_CONFIG = {
   apiKey: "AIzaSyBfrtj2KoLLz_YDsg_W_VgOx2402zETg4w",

@@ -1,6 +1,7 @@
 [ TO-DO ]
 - responsive nav bar/header
 - shared main gallery component
+  - create js fn to copy/create construct new photo objs for different sizes on load (spread obj)
 - gallery page for each portfolio category
 - homepage component
 - homepage image slider

@@ -1,17 +1,21 @@
 import React, { useState, useEffect } from 'react';
 import './App.css';
-import ImgGallery from './components/gallery/img-gallery';
-import Header from './components/header/header';
-import Footer from './components/footer/footer';
-import Navigation from './components/navbar/navigation';
-import HomePage from './components/pages/home/home-page';
+// import ImgGallery from './components/pages/photo/img-gallery';
+// import Header from './components/header/header';
+import Footer from './components/footer/Footer';
+// import Navigation from './components/navbar/navigation';
+import HomePage from './components/pages/home/HomePage';
+// import PeoplePortfolio from './components/pages/photo/people-portfolio';
+import CantBreathe from './components/pages/photo/cant-breathe';
 import UnderConstruction from './components/pages/misc/under-construction';
-import { Switch, Route, withRouter } from 'react-router-dom';
-import Firebase from './config';
+import { Switch, Route, withRouter, HashRouter } from 'react-router-dom';
+import Navigation from './components/navigation/Navigation';
+import Gallery from './components/pages/photo/Gallery';
+import { Box } from '@mui/material';
 
 const App = () => {
   const [message, toggleMessage] = useState(false);
-  const [photos, setPhotos] = useState('not working');
+  // const [photos, setPhotos] = useState('loading...');
 
   // TODO: create title banner
   // TODO: create useEffect calls to gallery db
@@ -19,43 +23,28 @@ const App = () => {
   // TODO: create gallery & lightbox
   // TODO: add scroll to top button
 
+  // // TODO: create call for homepage gallery here
+  // const database = Firebase.database().ref('photos/portraits');
 
-  // TODO: create call for homepage gallery here
-  const database = Firebase.database().ref('photos');
+  // useEffect(() => {
+  //   database.on('value', (snap) => {
+  //     setPhotos(snap.val());
+  //   });
+  // }, []);
 
-  useEffect(() => {
-    database.on('value', (snap) => {
-      setPhotos(snap.val());
-    });
-  }, []);
-
-  console.log('=>', photos);
+  // console.log('=>', photos);
 
   return (
-    <div>
-      {/* {message ? ( */}
-      {/* <UnderConstruction /> */}
-      {/* ) : ( */}
-      {/* <div style={{ margin: '5px' }}> */}
-      <Header />
+    <Box sx={{ width: '100%' }}>
+      <Navigation />
       <Switch>
-        <Route exact path="/" component={UnderConstruction} />
-        <Route path="/home" component={HomePage} />
-        {/* <Route path="/navi" component={Navigation} /> */}
-        <Route path="/gallery" component={ImgGallery} />
-        {/* <Route
-          path="/gallery"
-          render={(props) => <ImgGallery {...props} photos={photos} />}
-        /> */}
-        <Route path="/header" component={Header} />
+        <Route exact path='/' component={HomePage} />
+        <Route exact path='/gallery' component={Gallery} />
+        <Route path='/cantbreathe' component={CantBreathe} />
+        <Route exact path='/construction' component={UnderConstruction} />
       </Switch>
-      {/* </div> */}
-      {/* )} */}
-      <div style={{ textAlign: 'center', marginTop: '15px' }}>
-        <button onClick={() => toggleMessage(!message)}>♥️</button>
-        <Footer />
-      </div>
-    </div>
+      <Footer />
+    </Box>
   );
 };
 
