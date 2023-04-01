@@ -6,7 +6,7 @@ import Footer from './components/footer/Footer';
 // import Navigation from './components/navbar/navigation';
 import HomePage from './components/pages/home/HomePage';
 // import PeoplePortfolio from './components/pages/photo/people-portfolio';
-import CantBreathe from './components/pages/photo/cant-breathe';
+import CantBreathe from './components/pages/photo/CantBreathe';
 import UnderConstruction from './components/pages/misc/under-construction';
 import { Switch, Route, withRouter, HashRouter } from 'react-router-dom';
 import Navigation from './components/navigation/Navigation';

@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import Firebase from '../../../config';
 // import useEvent from '../../helpers/useEvent';
-import ImgGallery from './img-gallery';
-import Header from '../../header/header';
+import ImgGallery from './ImgGallery';
+import Header from '../../header/Header';
 
 const CantBreathe = ({toggleMessage}) => {
   const [photos4k, setPhotos4k] = useState();
@@ -31,7 +31,7 @@ const CantBreathe = ({toggleMessage}) => {
           <span role="img">♥️</span>
         </a> */}
         <a style={{ cursor: 'pointer', textDecoration: 'none' }} href='/'>
-          <span role="img">♥️</span>
+          <span role="img" aria-label='heart'>♥️</span>
         </a>
       </div>
     </div>
