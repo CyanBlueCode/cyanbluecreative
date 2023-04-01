@@ -7,15 +7,17 @@ const useScrolldown = () => {
     const handleScroll = () => {
       const windowHeight = window.innerHeight;
       const documentHeight = document.documentElement.scrollHeight;
-      const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+      const scrollTop =
+        window.pageYOffset || document.documentElement.scrollTop;
       const scrollHeight = scrollTop + windowHeight;
-      
-      if (scrollHeight >= documentHeight) {
+
+      // NOTE: -150px to predictively load images before user reaches bottom of page
+      if (scrollHeight >= documentHeight - 150) {
         setScrolledDown(true);
       } else {
         setScrolledDown(false);
       }
-    }
+    };
 
     window.addEventListener('scroll', handleScroll);
 
@@ -25,7 +27,6 @@ const useScrolldown = () => {
   }, []);
 
   return scrolledDown;
-}
-
+};
 
 export default useScrolldown;

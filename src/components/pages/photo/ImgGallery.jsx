@@ -3,9 +3,9 @@ import useEvent from '../../../util/useEvent';
 import Gallery from 'react-photo-gallery';
 // FIXME ImgsViewer is outdated; need to replace
 import ImgsViewer from 'react-images-viewer';
-// import Toast from '../../../util/Toast';
-import { Box, Button } from '@mui/material';
+import { Box } from '@mui/material';
 import useScrolldown from '../../../util/useScrollDown';
+import './ImgGallery.css';
 
 const ImgGallery = ({ photos4k }) => {
   const [currentImage, setCurrentImage] = useState(0);
@@ -111,7 +111,7 @@ const ImgGallery = ({ photos4k }) => {
   const onNext = () => setCurrentImage(currentImage + 1);
 
   return (
-    <Box>
+    <Box sx={{ m: 0.15 }}>
       {(photos1k || photos2k) && images && (
         <Gallery
           // photos={isRetina ? photos2k : photos1k}
@@ -123,7 +123,7 @@ const ImgGallery = ({ photos4k }) => {
         />
       )}
       {/* FIXME ImgsViewer is outdated; need to replace */}
-      {/* {photos2k && (
+      {photos2k && (
         <ImgsViewer
           imgs={(isRetina ? photos4k : photos2k).map((x) => ({
             ...x,
@@ -144,7 +144,7 @@ const ImgGallery = ({ photos4k }) => {
           showThumbnails={true}
           onClickThumbnail={(i) => setCurrentImage(i)}
         />
-      )} */}
+      )}
     </Box>
   );
 };

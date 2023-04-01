@@ -7,17 +7,18 @@ import Footer from './components/footer/Footer';
 import HomePage from './components/pages/home/HomePage';
 // import PeoplePortfolio from './components/pages/photo/people-portfolio';
 import CantBreathe from './components/pages/photo/CantBreathe';
-import UnderConstruction from './components/pages/misc/under-construction';
+import UnderConstruction from './components/pages/misc/UnderConstruction';
 import { Switch, Route, withRouter, HashRouter } from 'react-router-dom';
 import Navigation from './components/navigation/Navigation';
 import Gallery from './components/pages/photo/Gallery';
-import { Box } from '@mui/material';
+import { Box, IconButton } from '@mui/material';
 import Toast from './util/Toast';
+import ConstructionIcon from '@mui/icons-material/Construction';
 import useEvent from './util/useEvent';
 
 const App = () => {
-  const [message, toggleMessage] = useState(false);
   const [openToast, setOpenToast] = useState();
+  const [hideAppUnderConstruction, setAppUnderConstruction] = useState();
 
   // Right click toast
   useEvent('contextmenu', () => setOpenToast(true));
@@ -25,10 +26,7 @@ const App = () => {
 
   // const [photos, setPhotos] = useState('loading...');
 
-  // TODO: create title banner
-  // TODO: create useEffect calls to gallery db
-  // TODO: store gallery obj in local photo state
-  // TODO: create gallery & lightbox
+  // TODO: remove CONSTRUCTION toggles when ready
   // TODO: add scroll to top button
 
   // // TODO: create call for homepage gallery here
@@ -40,13 +38,21 @@ const App = () => {
   //   });
   // }, []);
 
-  // console.log('=>', photos);
-
   return (
     <Box sx={{ width: '100%' }}>
-      <Navigation />
+      <Navigation hideConstruction={hideAppUnderConstruction} />
       <Switch>
-        <Route exact path='/' component={HomePage} />
+        <Route
+          exact
+          path='/'
+          render={(props) => (
+            <HomePage
+              setAppUnderConstruction={setAppUnderConstruction}
+              hideConstruction={hideAppUnderConstruction}
+            />
+          )}
+        />
+        {/* <Route exact path='/' component={HomePage} /> */}
         <Route exact path='/gallery' component={Gallery} />
         <Route path='/cantbreathe' component={CantBreathe} />
         <Route exact path='/construction' component={UnderConstruction} />

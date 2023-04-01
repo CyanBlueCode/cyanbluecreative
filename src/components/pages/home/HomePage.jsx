@@ -1,11 +1,12 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { Box, Card, CardMedia, Slide, Button } from '@mui/material';
+import { Box, Card, CardMedia, Slide } from '@mui/material';
 import Photo1 from '../../../assets/CB-2K-1633232.jpg';
 import Photo2 from '../../../assets/CB-2K-1633147.jpg';
 import Photo3 from '../../../assets/P1511063.jpg';
 import Photo4 from '../../../assets/P1511379.jpg';
+import UnderConstruction from '../misc/UnderConstruction';
 
-const HomePage = () => {
+const HomePage = ({ setAppUnderConstruction, hideConstruction }) => {
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const [isRotating, setIsRotating] = useState(true);
   const containerRef = useRef(null);
@@ -31,7 +32,7 @@ const HomePage = () => {
     setIsRotating(!isRotating);
   };
 
-  return (
+  return hideConstruction ? (
     <>
       <Box
         sx={{
@@ -39,7 +40,6 @@ const HomePage = () => {
           position: 'relative',
           overflowX: 'hidden',
           backgroundColor: '#000000c4',
-          // backgroundImage:
         }}
         ref={containerRef}
       >
@@ -48,7 +48,6 @@ const HomePage = () => {
             key={index}
             direction={index === currentImageIndex ? 'left' : 'right'}
             in={index === currentImageIndex}
-            // appear={false}
             container={containerRef.current}
             timeout={1000}
             mountOnEnter
@@ -61,7 +60,6 @@ const HomePage = () => {
                 position: 'absolute',
                 width: '100%',
                 height: 'auto',
-                // backgroundImage: Photo4,
               }}
             >
               <CardMedia
@@ -71,8 +69,6 @@ const HomePage = () => {
                   marginLeft: 'auto',
                   marginRight: 'auto',
                 }}
-                // image='/src/assets/CB-2K-1633232.jpg'
-                // src={Photo1}
                 image={image}
                 title='Cyan Blue Creative'
                 onClick={handleToggleRotation}
@@ -82,6 +78,8 @@ const HomePage = () => {
         ))}
       </Box>
     </>
+  ) : (
+    <UnderConstruction toggle={setAppUnderConstruction}/>
   );
 };
 

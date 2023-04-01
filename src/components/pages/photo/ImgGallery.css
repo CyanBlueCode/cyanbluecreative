@@ -1,0 +1,5 @@
+/* NOTE: fix for small bug in react-photo-gallery causing gallery 
+/* container to be off-centered */
+.react-photo-gallery--gallery > div {
+    justify-content: center;
+  }

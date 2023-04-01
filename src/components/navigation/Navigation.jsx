@@ -68,12 +68,16 @@ HideOnScroll.propTypes = {
   children: PropTypes.element.isRequired,
 };
 
-const HideAppBar = (props) => {
+const Nagivation = (props) => {
   const {
     history,
     location: { pathname },
+    hideConstruction,
   } = props;
   const [open, setOpen] = useState(false);
+  
+  if(!hideConstruction) return null;
+  
   const navigationLinks = [
     {
       title: 'home',
@@ -91,6 +95,14 @@ const HideAppBar = (props) => {
       title: 'people',
       link: 'people',
     },
+    {
+      title: 'under construction',
+      link: 'construction',
+    },
+    {
+      title: 'contact',
+      link: 'contact',
+    }
   ];
 
   const isHomepage = pathname === '/';
@@ -98,7 +110,7 @@ const HideAppBar = (props) => {
   console.log('isHomepage =>', isHomepage);
 
   return (
-    <React.Fragment>
+    <>
       <CssBaseline />
       <HideOnScroll {...props}>
         <AppBar
@@ -180,8 +192,8 @@ const HideAppBar = (props) => {
         </AppBar>
       </HideOnScroll>
       {/* <Toolbar /> */}
-    </React.Fragment>
+    </>
   );
 };
 
-export default withRouter(HideAppBar);
+export default withRouter(Nagivation);
