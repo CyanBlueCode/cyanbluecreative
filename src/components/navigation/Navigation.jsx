@@ -112,6 +112,7 @@ const HideAppBar = (props) => {
         >
           <Toolbar>
             {/* FIXME isMobile not updating correctly */}
+            {/* useEvent('resize', () => viewportCalc()); */}
             <Link href='/' underline='none'>
               <Typography
                 variant={isMobile() ? 'h5' : 'h4'}

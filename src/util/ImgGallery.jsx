@@ -1,8 +1,9 @@
 import React, { useState, useEffect, useCallback } from 'react';
-import useEvent from '../../helpers/useEvent';
+import useEvent from './useEvent';
 import Gallery from 'react-photo-gallery';
 import Carousel, { Modal, ModalGateway } from 'react-images';
 import ImgsViewer from 'react-images-viewer';
+import Toast from './Toast';
 
 const ImgGallery = ({ photos4k }) => {
   const [currentImage, setCurrentImage] = useState(0);
@@ -58,7 +59,7 @@ const ImgGallery = ({ photos4k }) => {
 
   // console.log('1111=>', photos1k);
   // console.log('2222=>', photos2k);
-  // console.log('=x=>', photos4k && photos4k);
+  console.log('=x=>', photos4k && photos4k);
 
   // TODO: implement lazy loading with .slice to divide images into sections
   // TODO: useEvent to attach listeners or intersection observer
@@ -117,19 +118,34 @@ const ImgGallery = ({ photos4k }) => {
   // });
 
   // Disable right-click menu
+  // TODO consider giving a toast on right click with
   // useEvent('contextmenu', (e) => e.preventDefault());
+
+  const [openToast, setOpenToast] = useState();
+
+  useEvent('contextmenu', () => {
+    // console.log('contests mexnuson =>', 'contests mexnuson');
+    setOpenToast(true);
+  });
+
+  const handleClose = () => setOpenToast(false);
 
   const onPrev = () => setCurrentImage(currentImage - 1);
   const onNext = () => setCurrentImage(currentImage + 1);
 
   return (
     <div>
+      <Toast
+        open={openToast}
+        handleClose={handleClose}
+        toastMessage='Works on this site are currently shared under the Creative Commons CC BY-NC-SA 3.0 license. Commercial use requires explicit consent.'
+      />
       {(photos1k || photos2k) && (
         <Gallery
           photos={isRetina ? photos2k : photos1k}
           onClick={openLightbox}
           targetRowHeight={700}
-          direction="row"
+          direction='row'
           limitNodeSearch={nodeLimit}
         />
       )}
@@ -145,19 +161,14 @@ const ImgGallery = ({ photos4k }) => {
           onClickPrev={onPrev}
           onClickNext={onNext}
           onClose={closeLightbox}
-          closeBtnTitle="Close"
+          closeBtnTitle='Close'
           backdropCloseable={false}
-          leftArrowTitle="Prev"
-          rightArrowTitle="Next"
+          leftArrowTitle='Prev'
+          rightArrowTitle='Next'
           width={3840}
-          onClickImg={() =>
-            window.open(
-              photos2k[currentImage].src,
-              'Image',
-            )
-          }
+          onClickImg={() => window.open(photos2k[currentImage].src, 'Image')}
           showThumbnails={true}
-          onClickThumbnail={i => setCurrentImage(i)}
+          onClickThumbnail={(i) => setCurrentImage(i)}
         />
       )}
     </div>

@@ -6,15 +6,23 @@ import Footer from './components/footer/Footer';
 // import Navigation from './components/navbar/navigation';
 import HomePage from './components/pages/home/HomePage';
 // import PeoplePortfolio from './components/pages/photo/people-portfolio';
-import CantBreathe from './components/pages/photo/cant-breathe';
+import CantBreathe from './components/pages/photo/CantBreathe';
 import UnderConstruction from './components/pages/misc/under-construction';
 import { Switch, Route, withRouter, HashRouter } from 'react-router-dom';
 import Navigation from './components/navigation/Navigation';
 import Gallery from './components/pages/photo/Gallery';
 import { Box } from '@mui/material';
+import Toast from './util/Toast';
+import useEvent from './util/useEvent';
 
 const App = () => {
   const [message, toggleMessage] = useState(false);
+  const [openToast, setOpenToast] = useState();
+
+  // Right click toast
+  useEvent('contextmenu', () => setOpenToast(true));
+  const handleClose = () => setOpenToast(false);
+
   // const [photos, setPhotos] = useState('loading...');
 
   // TODO: create title banner
@@ -43,6 +51,11 @@ const App = () => {
         <Route path='/cantbreathe' component={CantBreathe} />
         <Route exact path='/construction' component={UnderConstruction} />
       </Switch>
+      <Toast
+        open={openToast}
+        handleClose={handleClose}
+        toastMessage='Works on this site are currently shared under the Creative Commons CC BY-NC-SA 3.0 license. Commercial use requires explicit consent.'
+      />
       <Footer />
     </Box>
   );
