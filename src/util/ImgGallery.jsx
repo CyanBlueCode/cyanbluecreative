@@ -1,19 +1,19 @@
 import React, { useState, useEffect, useCallback } from 'react';
-import useEvent from '../../../util/useEvent';
+import useEvent from './useEvent';
 import Gallery from 'react-photo-gallery';
-// FIXME ImgsViewer is outdated; need to replace
+import Carousel, { Modal, ModalGateway } from 'react-images';
 import ImgsViewer from 'react-images-viewer';
-// import Toast from '../../../util/Toast';
-import { Box, Button } from '@mui/material';
-import useScrolldown from '../../../util/useScrollDown';
+import Toast from './Toast';
 
 const ImgGallery = ({ photos4k }) => {
   const [currentImage, setCurrentImage] = useState(0);
   const [viewerIsOpen, setViewerIsOpen] = useState(false);
   const [nodeLimit, setNodeLimit] = useState(2);
   const [isRetina, setIsRetina] = useState(false);
-  const [photos2k, setPhotos2k] = useState([]);
+  const [photos2k, setPhotos2k] = useState();
   const [photos1k, setPhotos1k] = useState();
+
+  // console.log('=>', photos2k);
 
   const openLightbox = useCallback((event, { photo, index }) => {
     setCurrentImage(index);
@@ -21,10 +21,31 @@ const ImgGallery = ({ photos4k }) => {
   }, []);
 
   const closeLightbox = () => {
+    // setCurrentImage(0);
     setViewerIsOpen(false);
   };
 
   // TODO: implement shouldcomponentupdate hook to prevent re-render when exiting from lightbox
+
+  const transformPhotoRes = (photoSet, resolution) => {
+    return (
+      photoSet &&
+      photoSet.map((photo) => {
+        const prefix = 'https://media.publit.io/file';
+        const splitSrc = photo.src.split('/');
+        const folder = splitSrc[4];
+        const fileName = splitSrc[6].slice(0, -13);
+        const transformedSrc = `${prefix}/${folder}/${resolution}/${fileName}-${resolution}p-80.jpg`;
+        // console.log('file name=>', transformedSrc);
+        return {
+          ...photo,
+          src: transformedSrc,
+          // title: `${fileName}-${resolution}p-80`,
+          title: '©CyanBlueCreative',
+        };
+      })
+    );
+  };
 
   useEffect(() => {
     viewportCalc();
@@ -34,23 +55,11 @@ const ImgGallery = ({ photos4k }) => {
     }
     const photoSet2k = photos4k && transformPhotoRes(photos4k, 2048);
     setPhotos2k(photoSet2k);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  const transformPhotoRes = (photoSet, resolution) =>
-    photoSet?.map((photo) => {
-      const prefix = 'https://media.publit.io/file';
-      const splitSrc = photo.src.split('/');
-      const folder = splitSrc[4];
-      const fileName = splitSrc[6].slice(0, -13);
-      const transformedSrc = `${prefix}/${folder}/${resolution}/${fileName}-${resolution}p-80.jpg`;
-      return {
-        ...photo,
-        src: transformedSrc,
-        // title: `${fileName}-${resolution}p-80`,
-        title: '©CyanBlueCreative',
-      };
-    });
+  // console.log('1111=>', photos1k);
+  // console.log('2222=>', photos2k);
+  console.log('=x=>', photos4k && photos4k);
 
   // TODO: implement lazy loading with .slice to divide images into sections
   // TODO: useEvent to attach listeners or intersection observer
@@ -60,13 +69,15 @@ const ImgGallery = ({ photos4k }) => {
   // TODO: consider separating viewportWidth and isRetina calculations
   // TODO: need more conditionals to render 1024p imgs for retina screens <= 512px
 
+  // TODO: abstract viewportCalc into a helper? what to do with states? split into 2 functions? return array?
   const viewportCalc = () => {
     const viewportWidth = window.innerWidth;
+    // console.log('=>', viewportWidth);
     if (viewportWidth <= 479) {
       setNodeLimit(1);
-    } else if (viewportWidth <= 776) {
+    } else if (viewportWidth <= 767) {
       setNodeLimit(2);
-    } else if (viewportWidth <= 1900) {
+    } else if (viewportWidth <= 2048) {
       setNodeLimit(2);
     } else {
       setNodeLimit(4);
@@ -87,43 +98,58 @@ const ImgGallery = ({ photos4k }) => {
   // https://atomizedobjects.com/blog/react/add-event-listener-react-hooks/
   useEvent('resize', () => viewportCalc());
 
-  // ANCHOR: Lazy load images
-  const userScrolledDown = useScrolldown();
-  const [images, setImages] = useState([]);
-  const [count, setCount] = useState(0);
+  // function doSomething(scrollPos) {
+  //   const viewportHeight = window.innerHeight;
+  //   if (scrollPos >= viewportHeight) {
+  //     console.log('SCROLLLL=>', scrollPos);
+  //   }
+  // }
+  // useEvent('scroll', (e) => {
+  //   const scrollPos = window.scrollY;
+  //   let ticking = false;
+  //   if (!ticking) {
+  //     window.requestAnimationFrame(() => {
+  //       doSomething(scrollPos);
+  //       ticking = false;
+  //     });
 
-  const loadMoreImgs = () => {
-    if (count >= photos2k.length) return;
-    if (images.length === 0 || userScrolledDown) {
-      const slicedPics = [...photos2k].slice(count, count + 4);
-      setImages([...images, ...slicedPics]);
-      setCount(count + 4);
-    }
-  };
-  console.log('count =>', count);
-  console.log('images =>', images);
-  console.log('userScrolledDown =>', userScrolledDown);
-  // console.log('photos2k =>', photos2k);
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  useEffect(() => loadMoreImgs(), [photos2k, userScrolledDown]);
+  //     ticking = true;
+  //   }
+  // });
+
+  // Disable right-click menu
+  // TODO consider giving a toast on right click with
+  // useEvent('contextmenu', (e) => e.preventDefault());
+
+  const [openToast, setOpenToast] = useState();
+
+  useEvent('contextmenu', () => {
+    // console.log('contests mexnuson =>', 'contests mexnuson');
+    setOpenToast(true);
+  });
+
+  const handleClose = () => setOpenToast(false);
 
   const onPrev = () => setCurrentImage(currentImage - 1);
   const onNext = () => setCurrentImage(currentImage + 1);
 
   return (
-    <Box>
-      {(photos1k || photos2k) && images && (
+    <div>
+      <Toast
+        open={openToast}
+        handleClose={handleClose}
+        toastMessage='Works on this site are currently shared under the Creative Commons CC BY-NC-SA 3.0 license. Commercial use requires explicit consent.'
+      />
+      {(photos1k || photos2k) && (
         <Gallery
-          // photos={isRetina ? photos2k : photos1k}
-          photos={images}
+          photos={isRetina ? photos2k : photos1k}
           onClick={openLightbox}
           targetRowHeight={700}
           direction='row'
           limitNodeSearch={nodeLimit}
         />
       )}
-      {/* FIXME ImgsViewer is outdated; need to replace */}
-      {/* {photos2k && (
+      {photos2k && (
         <ImgsViewer
           imgs={(isRetina ? photos4k : photos2k).map((x) => ({
             ...x,
@@ -144,8 +170,8 @@ const ImgGallery = ({ photos4k }) => {
           showThumbnails={true}
           onClickThumbnail={(i) => setCurrentImage(i)}
         />
-      )} */}
-    </Box>
+      )}
+    </div>
   );
 };
 
