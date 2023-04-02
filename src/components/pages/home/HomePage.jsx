@@ -9,9 +9,32 @@ import UnderConstruction from '../misc/UnderConstruction';
 const HomePage = ({ setAppUnderConstruction, hideConstruction }) => {
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const [isRotating, setIsRotating] = useState(true);
+  const [isLoading, setIsLoading] = useState(true);
   const containerRef = useRef(null);
   const images = [Photo1, Photo2, Photo3, Photo4];
 
+  // Cache images to prevent flashing on initial load
+  const cacheImages = async (imagesArr) => {
+    const promises = await imagesArr.map(
+      (image) =>
+        new Promise((resolve, reject) => {
+          const img = new Image();
+          img.src = image;
+          img.onload = resolve();
+          img.onerror = reject();
+        })
+    );
+
+    await Promise.all(promises);
+    setIsLoading(false);
+  };
+
+  useEffect(() => {
+    cacheImages(images);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  // Auto-rotate through images
   useEffect(() => {
     let intervalId;
     if (isRotating) {
@@ -23,6 +46,7 @@ const HomePage = ({ setAppUnderConstruction, hideConstruction }) => {
             return prevIndex + 1;
           }
         });
+        // NOTE: time control here
       }, 5000);
     }
     return () => clearInterval(intervalId);
@@ -32,7 +56,7 @@ const HomePage = ({ setAppUnderConstruction, hideConstruction }) => {
     setIsRotating(!isRotating);
   };
 
-  return hideConstruction ? (
+  return hideConstruction ? !isLoading && (
     <>
       <Box
         sx={{
@@ -79,7 +103,7 @@ const HomePage = ({ setAppUnderConstruction, hideConstruction }) => {
       </Box>
     </>
   ) : (
-    <UnderConstruction toggle={setAppUnderConstruction}/>
+    <UnderConstruction toggle={setAppUnderConstruction} />
   );
 };
 
