@@ -1,4 +1,4 @@
-export const isMobile = () => {
+const isMobile = () => {
   const userAgent = window?.navigator?.userAgent;
   return !!(
     (!!userAgent &&
@@ -7,3 +7,5 @@ export const isMobile = () => {
     window.innerWidth <= 776
   );
 };
+
+export default isMobile;

@@ -16,7 +16,7 @@ import {
 } from '@mui/material';
 import MenuIcon from '@mui/icons-material/Menu';
 import PropTypes from 'prop-types';
-import { isMobile } from '../../util/isMobile';
+import isMobile from '../../util/isMobile';
 
 const HideOnScroll = ({ children, window }) => {
   // Note that you normally won't need to set the window ref as useScrollTrigger
@@ -47,8 +47,6 @@ const HideOnScroll = ({ children, window }) => {
   //   [y]
   // );
 
-  // console.log('isMobile =>', isMobile());
-
   // useEffect(() => {
   //   window.addEventListener('scroll', handleNavigation);
 
@@ -75,9 +73,9 @@ const Nagivation = (props) => {
     hideConstruction,
   } = props;
   const [open, setOpen] = useState(false);
-  
-  if(!hideConstruction) return null;
-  
+
+  if (!hideConstruction) return null;
+
   const navigationLinks = [
     {
       title: 'home',
@@ -102,12 +100,10 @@ const Nagivation = (props) => {
     {
       title: 'contact',
       link: 'contact',
-    }
+    },
   ];
 
   const isHomepage = pathname === '/';
-
-  console.log('isHomepage =>', isHomepage);
 
   return (
     <>
