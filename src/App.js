@@ -1,37 +1,30 @@
-import React, { useState, useEffect } from 'react';
-import './App.css';
-// import ImgGallery from './components/pages/photo/img-gallery';
-// import Header from './components/header/header';
-import Footer from './components/footer/Footer';
-// import Navigation from './components/navbar/navigation';
-import HomePage from './components/pages/home/HomePage';
-// import PeoplePortfolio from './components/pages/photo/people-portfolio';
+import React, { useState } from 'react';
+import { Switch, Route, withRouter } from 'react-router-dom';
+import { Box } from '@mui/material';
+import Home from './components/pages/home/Home';
 import CantBreathe from './components/pages/photo/CantBreathe';
+// import PeoplePortfolio from './components/pages/photo/people-portfolio';
+import Footer from './components/footer/Footer';
 import UnderConstruction from './components/pages/misc/UnderConstruction';
-import { Switch, Route, withRouter, HashRouter } from 'react-router-dom';
 import Navigation from './components/navigation/Navigation';
-import Gallery from './components/pages/photo/Gallery';
-import { Box, IconButton } from '@mui/material';
+import Gallery from './components/images/Gallery';
 import Toast from './util/Toast';
-import ConstructionIcon from '@mui/icons-material/Construction';
 import useEvent from './util/useEvent';
+import './App.css';
 
 const App = () => {
-  const [openToast, setOpenToast] = useState();
+  const [openToast, setOpenToast] = useState(false);
   const [hideAppUnderConstruction, setAppUnderConstruction] = useState();
 
-  // Right click toast
+  // Right click toast message
   useEvent('contextmenu', () => setOpenToast(true));
   const handleClose = () => setOpenToast(false);
-
-  // const [photos, setPhotos] = useState('loading...');
 
   // TODO: remove CONSTRUCTION toggles when ready
   // TODO: add scroll to top button
 
-  // // TODO: create call for homepage gallery here
+  // // TODO: create call for Home gallery here
   // const database = Firebase.database().ref('photos/portraits');
-
   // useEffect(() => {
   //   database.on('value', (snap) => {
   //     setPhotos(snap.val());
@@ -45,14 +38,14 @@ const App = () => {
         <Route
           exact
           path='/'
-          render={(props) => (
-            <HomePage
+          render={() => (
+            <Home
               setAppUnderConstruction={setAppUnderConstruction}
               hideConstruction={hideAppUnderConstruction}
             />
           )}
         />
-        {/* <Route exact path='/' component={HomePage} /> */}
+        {/* <Route exact path='/' component={Home} /> */}
         <Route exact path='/gallery' component={Gallery} />
         <Route path='/cantbreathe' component={CantBreathe} />
         <Route exact path='/construction' component={UnderConstruction} />

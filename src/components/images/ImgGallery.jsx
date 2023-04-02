@@ -1,10 +1,10 @@
 import React, { useState, useEffect, useCallback } from 'react';
-import useEvent from '../../../util/useEvent';
+import useEvent from '../../util/useEvent';
 import Gallery from 'react-photo-gallery';
 // FIXME ImgsViewer is outdated; need to replace
 import ImgsViewer from 'react-images-viewer';
 import { Box } from '@mui/material';
-import useScrolldown from '../../../util/useScrollDown';
+import useScrolldown from '../../util/useScrollDown';
 import './ImgGallery.css';
 
 const ImgGallery = ({ photos4k }) => {

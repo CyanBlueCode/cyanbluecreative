@@ -6,7 +6,7 @@ import Photo3 from '../../../assets/P1511063.jpg';
 import Photo4 from '../../../assets/P1511379.jpg';
 import UnderConstruction from '../misc/UnderConstruction';
 
-const HomePage = ({ setAppUnderConstruction, hideConstruction }) => {
+const Home = ({ setAppUnderConstruction, hideConstruction }) => {
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const [isRotating, setIsRotating] = useState(true);
   const [isLoading, setIsLoading] = useState(true);
@@ -107,4 +107,4 @@ const HomePage = ({ setAppUnderConstruction, hideConstruction }) => {
   );
 };
 
-export default HomePage;
+export default Home;
