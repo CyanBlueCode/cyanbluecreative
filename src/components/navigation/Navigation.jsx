@@ -73,6 +73,7 @@ const Nagivation = (props) => {
     hideConstruction,
   } = props;
   const [open, setOpen] = useState(false);
+  const isHomepage = pathname === '/';
 
   if (!hideConstruction) return null;
 
@@ -89,10 +90,10 @@ const Nagivation = (props) => {
       title: 'gallery',
       link: 'gallery',
     },
-    {
-      title: 'people',
-      link: 'people',
-    },
+    // {
+    //   title: 'people',
+    //   link: 'people',
+    // },
     {
       title: 'under construction',
       link: 'construction',
@@ -103,7 +104,6 @@ const Nagivation = (props) => {
     },
   ];
 
-  const isHomepage = pathname === '/';
 
   return (
     <>

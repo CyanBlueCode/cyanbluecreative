@@ -7,6 +7,7 @@ import CantBreathe from './components/pages/photo/CantBreathe';
 import Footer from './components/footer/Footer';
 import UnderConstruction from './components/pages/misc/UnderConstruction';
 import Navigation from './components/navigation/Navigation';
+import ContactForm from './components/pages/contact/ContactForm';
 import Gallery from './components/images/Gallery';
 import Toast from './util/Toast';
 import useEvent from './util/useEvent';
@@ -49,13 +50,14 @@ const App = () => {
         <Route exact path='/gallery' component={Gallery} />
         <Route path='/cantbreathe' component={CantBreathe} />
         <Route exact path='/construction' component={UnderConstruction} />
+        <Route exact path='/contact' component={ContactForm} />
       </Switch>
       <Toast
         open={openToast}
         handleClose={handleClose}
         toastMessage='Works on this site are currently shared under the Creative Commons CC BY-NC-SA 3.0 license. Commercial use requires explicit consent.'
       />
-      <Footer />
+      <Footer toggle={setAppUnderConstruction}/>
     </Box>
   );
 };
