@@ -27,7 +27,7 @@ const ScrollToTop = () => {
           onClick={scrollToTop}
           sx={{
             color: '#ffffff',
-            backgroundColor: '#0000003c',
+            backgroundColor: '#0000004c',
             '&:hover': { color: '#000000' },
           }}
           size='small'
