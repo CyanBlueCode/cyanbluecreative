@@ -2,7 +2,7 @@ import React from 'react';
 import { Box, Typography } from '@mui/material';
 import { Instagram, MailOutline, Home } from '@mui/icons-material';
 
-const Footer = () => {
+const Footer = ({ toggle }) => {
   const currentYear = new Date().getFullYear();
   return (
     <Box
@@ -48,7 +48,10 @@ const Footer = () => {
             <MailOutline sx={{ height: 20 }} />
           </a>
         </Box>
-        <Box sx={{ maxHeight: 'fit-content', pt: 1 }}>
+        <Box
+          sx={{ maxHeight: 'fit-content', pt: 1 }}
+          onClick={() => toggle(true)}
+        >
           {`CyanBlueCreative © ${currentYear}`}
         </Box>
       </Typography>

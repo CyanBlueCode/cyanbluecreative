@@ -1,10 +1,11 @@
 import React, { useState, useEffect, useCallback } from 'react';
-import useEvent from '../../../util/useEvent';
+import useEvent from '../../util/useEvent';
 import Gallery from 'react-photo-gallery';
 // FIXME ImgsViewer is outdated; need to replace
 import ImgsViewer from 'react-images-viewer';
-import { Box } from '@mui/material';
-import useScrolldown from '../../../util/useScrollDown';
+import { Box, Modal, Fade, Backdrop } from '@mui/material';
+import useScrolldown from '../../util/useScrollDown';
+import isMobile from '../../util/isMobile';
 import './ImgGallery.css';
 
 const ImgGallery = ({ photos4k }) => {
@@ -14,7 +15,11 @@ const ImgGallery = ({ photos4k }) => {
   const [isRetina, setIsRetina] = useState(false);
   const [photos2k, setPhotos2k] = useState([]);
   const [photos1k, setPhotos1k] = useState();
-
+  const currImgSrc = photos2k?.[currentImage]?.src
+  const mobileView = isMobile();
+  const isVerticalImage = photos2k?.[currentImage];
+  // < photos2k?.[currentImage].height();
+  console.log('isVerticalImage =>', isVerticalImage);
   const openLightbox = useCallback((event, { photo, index }) => {
     setCurrentImage(index);
     setViewerIsOpen(true);
@@ -87,11 +92,13 @@ const ImgGallery = ({ photos4k }) => {
   // https://atomizedobjects.com/blog/react/add-event-listener-react-hooks/
   useEvent('resize', () => viewportCalc());
 
-  // ANCHOR: Lazy load images
+  // Lazy load images
   const userScrolledDown = useScrolldown();
   const [images, setImages] = useState([]);
   const [count, setCount] = useState(0);
+  console.log('images =>', images);
 
+  // TODO implement for 1k imgs as well
   const loadMoreImgs = () => {
     if (count >= photos2k.length) return;
     if (images.length === 0 || userScrolledDown) {
@@ -100,15 +107,63 @@ const ImgGallery = ({ photos4k }) => {
       setCount(count + 4);
     }
   };
-  console.log('count =>', count);
-  console.log('images =>', images);
-  console.log('userScrolledDown =>', userScrolledDown);
-  // console.log('photos2k =>', photos2k);
   // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(() => loadMoreImgs(), [photos2k, userScrolledDown]);
 
   const onPrev = () => setCurrentImage(currentImage - 1);
   const onNext = () => setCurrentImage(currentImage + 1);
+
+  const style = {
+    position: 'absolute',
+    top: '50%',
+    left: '50%',
+    margin: 'auto',
+    maxHeight: '100vh',
+    width: '98%',
+    maxWidth: '100%',
+    transform: 'translate(-50%, -50%)',
+    backgroundColor: 'common.white',
+    overflowY: 'auto',
+  };
+
+  const renderImageViewerModal = () => (
+    <Modal
+      aria-labelledby='transition-modal-title'
+      aria-describedby='transition-modal-description'
+      open={viewerIsOpen}
+      onClose={closeLightbox}
+      closeAfterTransition
+      slots={{ backdrop: Backdrop }}
+      disableAutoFocus
+      slotProps={{
+        backdrop: {
+          timeout: 700,
+          sx: {
+            color: '#000000c4',
+            // FIXME hide scroll bar not working
+            overflow: 'hidden',
+            '-ms-overflow-style': 'none',
+            scrollbarWidth: 'none',
+            '&::-webkit-scrollbar': {
+              display: 'none',
+            },
+          },
+        },
+      }}
+    >
+      <Fade in={viewerIsOpen}>
+        <Box sx={style} onClick={closeLightbox}>
+          <Box sx={{ m: 2, height: '100%' }}>
+            <img
+              style={{ width: '100%' }}
+              src={currImgSrc}
+              alt={`full size - ${currImgSrc}`}
+            />
+          </Box>
+        </Box>
+      </Fade>
+    </Modal>
+  );
 
   return (
     <Box sx={{ m: 0.15 }}>
@@ -123,7 +178,8 @@ const ImgGallery = ({ photos4k }) => {
         />
       )}
       {/* FIXME ImgsViewer is outdated; need to replace */}
-      {photos2k && (
+      {photos2k && renderImageViewerModal()}
+      {/* {photos2k && (
         <ImgsViewer
           imgs={(isRetina ? photos4k : photos2k).map((x) => ({
             ...x,
@@ -144,7 +200,7 @@ const ImgGallery = ({ photos4k }) => {
           showThumbnails={true}
           onClickThumbnail={(i) => setCurrentImage(i)}
         />
-      )}
+      )} */}
     </Box>
   );
 };
