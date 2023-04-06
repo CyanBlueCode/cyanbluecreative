@@ -9,6 +9,7 @@ import UnderConstruction from './components/pages/misc/UnderConstruction';
 import Navigation from './components/navigation/Navigation';
 import ContactForm from './components/pages/contact/ContactForm';
 import Gallery from './components/images/Gallery';
+import PhotoBanners from './components/pages/photo/PhotoBanners';
 import Toast from './util/Toast';
 import useEvent from './util/useEvent';
 import './App.css';
@@ -51,6 +52,7 @@ const App = () => {
         <Route path='/cantbreathe' component={CantBreathe} />
         <Route exact path='/construction' component={UnderConstruction} />
         <Route exact path='/contact' component={ContactForm} />
+        <Route exact path='/photos' component={PhotoBanners} />
       </Switch>
       <Toast
         open={openToast}

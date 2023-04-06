@@ -83,6 +83,10 @@ const Nagivation = (props) => {
       link: '',
     },
     {
+      title: 'photos',
+      link: 'photos',
+    },
+    {
       title: `can't breathe`,
       link: 'cantbreathe',
     },
