@@ -1,15 +1,16 @@
 import React from 'react';
-// import Navigation from '../navbar/navigation';
 
-const Header = (props) => {
+const Header = ({
+  title = 'JUNE 2020 | AUSTIN, TX',
+  subText = 'At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti',
+}) => {
   return (
     <div style={{ margin: '10px', textAlign: 'center' }}>
       <div>
-        <h1>JUNE 2020 | AUSTIN, TX</h1>
+        <h1>{title}</h1>
         <h5>
-        This is a special temporary page in support of the ongoing anti-police brutality
-        protests across the world.
-      </h5>
+          {subText}
+        </h5>
       </div>
     </div>
   );

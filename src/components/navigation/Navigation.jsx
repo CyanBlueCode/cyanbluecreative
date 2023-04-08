@@ -18,6 +18,42 @@ import MenuIcon from '@mui/icons-material/Menu';
 import PropTypes from 'prop-types';
 import isMobile from '../../util/isMobile';
 
+// NOTE update hamburger menu navigation here
+const navigationLinks = [
+  {
+    title: 'home',
+    link: '',
+  },
+  {
+    title: 'photos',
+    link: 'photos',
+  },
+  {
+    title: `can't breathe`,
+    link: 'cantbreathe',
+  },
+  {
+    title: 'gallery',
+    link: 'gallery',
+  },
+  {
+    title: 'people',
+    link: 'people',
+  },
+  {
+    title: 'street',
+    link: 'street',
+  },
+  {
+    title: 'under construction',
+    link: 'construction',
+  },
+  {
+    title: 'contact',
+    link: 'contact',
+  },
+];
+
 const HideOnScroll = ({ children, window }) => {
   // Note that you normally won't need to set the window ref as useScrollTrigger
   // will default to window.
@@ -76,34 +112,6 @@ const Nagivation = (props) => {
   const isHomepage = pathname === '/';
 
   if (!hideConstruction) return null;
-
-  const navigationLinks = [
-    {
-      title: 'home',
-      link: '',
-    },
-    {
-      title: `can't breathe`,
-      link: 'cantbreathe',
-    },
-    {
-      title: 'gallery',
-      link: 'gallery',
-    },
-    // {
-    //   title: 'people',
-    //   link: 'people',
-    // },
-    {
-      title: 'under construction',
-      link: 'construction',
-    },
-    {
-      title: 'contact',
-      link: 'contact',
-    },
-  ];
-
 
   return (
     <>
