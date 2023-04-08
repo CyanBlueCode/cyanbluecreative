@@ -8,19 +8,14 @@ import {
   Grid,
   Typography,
 } from '@mui/material';
-import isMobile from '../../../util/isMobile';
-
-import Photo1 from '../../../assets/CB-2K-1633232.jpg';
-import Photo2 from '../../../assets/CB-2K-1633147.jpg';
-import Photo3 from '../../../assets/P1511063.jpg';
-import Photo4 from '../../../assets/P1511379.jpg';
+import useEvent from '../../util/useEvent';
+import isMobile from '../../util/isMobile';
 
 const ImageCard = ({ image }) => {
   const [hovered, setHovered] = useState(false);
-  const mobile = isMobile();
-  // if(isMobile){
-  //   setHovered(true)
-  // };
+  const [mobile, setMobile] = useState(isMobile());
+
+  useEvent('resize', () => setMobile(isMobile()));
 
   useEffect(() => {
     if (mobile) {
@@ -100,61 +95,4 @@ const ImageCard = ({ image }) => {
   );
 };
 
-const PhotoBanners = ({ imagesData }) => {
-  const images = imagesData || [
-    {
-      src: Photo1,
-      alt: 'Image 1',
-      title: 'product',
-      link: '/gallery',
-    },
-    {
-      src: Photo2,
-      alt: 'Image 2',
-      title: 'people',
-      link: '/construction',
-    },
-    {
-      src: Photo3,
-      alt: 'Image 3',
-      title: 'activism',
-      link: '/cantbreathe',
-    },
-    {
-      src: Photo4,
-      alt: 'Image 4',
-      title: 'contact',
-      link: '/contact',
-    },
-  ];
-
-  return (
-    <Box>
-      <Typography
-        variant='h3'
-        sx={{ textTransform: 'uppercase', mt: 4, mb: 4, textAlign: 'center', fontWeight: 600 }}
-      >
-        Photos
-      </Typography>
-      <Grid
-        container
-        spacing={4}
-        sx={{
-          display: 'flex',
-          flexDirection: 'column',
-          justifyContent: 'center',
-          alignItems: 'center',
-          mb: 8,
-        }}
-      >
-        {images.map((image, index) => (
-          <Grid item key={index} xs={12}>
-            <ImageCard image={image} />
-          </Grid>
-        ))}
-      </Grid>
-    </Box>
-  );
-};
-
-export default PhotoBanners;
+export default ImageCard;

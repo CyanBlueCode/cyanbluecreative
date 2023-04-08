@@ -42,6 +42,7 @@ const ImgGallery = ({ photos4k }) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
+  // TODO need to implement a better solution for this. too complicated
   const transformPhotoRes = (photoSet, resolution) =>
     photoSet?.map((photo) => {
       const prefix = 'https://media.publit.io/file';
