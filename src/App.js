@@ -26,15 +26,6 @@ const App = () => {
   const handleClose = () => setOpenToast(false);
 
   // TODO: remove CONSTRUCTION toggles when ready
-  // TODO: add scroll to top button
-
-  // // TODO: create call for Home gallery here
-  // const database = Firebase.database().ref('photos/portraits');
-  // useEffect(() => {
-  //   database.on('value', (snap) => {
-  //     setPhotos(snap.val());
-  //   });
-  // }, []);
 
   return (
     <Box sx={{ width: '100%' }}>

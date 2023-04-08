@@ -4,7 +4,7 @@ import ImgGallery from './ImgGallery';
 import Header from '../header/Header';
 import ScrollToTop from '../../util/ScrollToTop';
 
-const PhotoPortfolio = ({ galleryName = 'street', title, subText }) => {
+const PhotoGrid = ({ galleryName = 'street', title, subText }) => {
   const [photos4k, setPhotos4k] = useState();
 
   useEffect(() => {
@@ -35,4 +35,4 @@ const PhotoPortfolio = ({ galleryName = 'street', title, subText }) => {
   );
 };
 
-export default PhotoPortfolio;
+export default PhotoGrid;

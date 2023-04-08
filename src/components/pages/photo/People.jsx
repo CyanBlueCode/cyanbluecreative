@@ -1,8 +1,8 @@
 import React from 'react';
-import PhotoPortfolio from '../../images/PhotoPortfolio';
+import PhotoGrid from '../../images/PhotoGrid';
 
 const People = () => {
-  return ( <PhotoPortfolio galleryName='portraits' title='People'/> );
+  return ( <PhotoGrid galleryName='portraits' title='People'/> );
 }
  
 export default People;

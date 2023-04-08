@@ -2,7 +2,7 @@ import React, { useState, useEffect, useCallback } from 'react';
 import useEvent from '../../util/useEvent';
 import Gallery from 'react-photo-gallery';
 // FIXME ImgsViewer is outdated; need to replace
-import ImgsViewer from 'react-images-viewer';
+// import ImgsViewer from 'react-images-viewer';
 import { Box, Modal, Fade, Backdrop } from '@mui/material';
 import useScrolldown from '../../util/useScrollDown';
 import isMobile from '../../util/isMobile';
@@ -14,12 +14,14 @@ const ImgGallery = ({ photos4k }) => {
   const [nodeLimit, setNodeLimit] = useState(2);
   const [isRetina, setIsRetina] = useState(false);
   const [photos2k, setPhotos2k] = useState([]);
-  const [photos1k, setPhotos1k] = useState();
-  const currImgSrc = photos2k?.[currentImage]?.src
-  const mobileView = isMobile();
-  const isVerticalImage = photos2k?.[currentImage];
+  const [photos1k, setPhotos1k] = useState([]);
+  const currImgSrc = photos2k?.[currentImage]?.src;
+  const [photos, setPhotos] = useState([]);
+  const [count, setCount] = useState(0);
+  const mobile = isMobile();
+  const isVerticalImage =
+    photos?.[currentImage]?.height > photos?.[currentImage]?.width;
   // < photos2k?.[currentImage].height();
-  console.log('isVerticalImage =>', isVerticalImage);
   const openLightbox = useCallback((event, { photo, index }) => {
     setCurrentImage(index);
     setViewerIsOpen(true);
@@ -39,6 +41,8 @@ const ImgGallery = ({ photos4k }) => {
     }
     const photoSet2k = photos4k && transformPhotoRes(photos4k, 2048);
     setPhotos2k(photoSet2k);
+    // NOTE we only want to run this effect once, so client doesn't load
+    // new set of images on each resize
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -57,11 +61,6 @@ const ImgGallery = ({ photos4k }) => {
         title: '©CyanBlueCreative',
       };
     });
-
-  // TODO: implement lazy loading with .slice to divide images into sections
-  // TODO: useEvent to attach listeners or intersection observer
-  // https://developers.google.com/web/fundamentals/performance/lazy-loading-guidance/images-and-video
-  // https://medium.com/the-non-traditional-developer/how-to-use-an-intersectionobserver-in-a-react-hook-9fb061ac6cb5
 
   // TODO: consider separating viewportWidth and isRetina calculations
   // TODO: need more conditionals to render 1024p imgs for retina screens <= 512px
@@ -95,16 +94,14 @@ const ImgGallery = ({ photos4k }) => {
 
   // Lazy load images
   const userScrolledDown = useScrolldown();
-  const [images, setImages] = useState([]);
-  const [count, setCount] = useState(0);
-  console.log('images =>', images);
 
-  // TODO implement for 1k imgs as well
+  // NOTE number after 'count +' determines how many photos are loaded at a time
   const loadMoreImgs = () => {
-    if (count >= photos2k.length) return;
-    if (images.length === 0 || userScrolledDown) {
-      const slicedPics = [...photos2k].slice(count, count + 4);
-      setImages([...images, ...slicedPics]);
+    const processedPhotos = [...photos2k, ...photos1k];
+    if (count >= processedPhotos.length) return;
+    if (photos.length === 0 || userScrolledDown) {
+      const slicedPics = [...processedPhotos].slice(count, count + 4);
+      setPhotos([...photos, ...slicedPics]);
       setCount(count + 4);
     }
   };
@@ -127,6 +124,14 @@ const ImgGallery = ({ photos4k }) => {
     overflowY: 'auto',
   };
 
+  const desktopStyle = {
+    ...style,
+    ...{ height: 'auto', width: 'auto' },
+  };
+
+  console.log('mobile =>', mobile);
+
+  // TODO use isVerticalImage to change height/width max
   const renderImageViewerModal = () => (
     <Modal
       aria-labelledby='transition-modal-title'
@@ -140,10 +145,10 @@ const ImgGallery = ({ photos4k }) => {
         backdrop: {
           timeout: 700,
           sx: {
-            color: '#000000c4',
+            backgroundColor: '#000000c4',
             // FIXME hide scroll bar not working
             overflow: 'hidden',
-            '-ms-overflow-style': 'none',
+            'msOverflowStyle': 'none',
             scrollbarWidth: 'none',
             '&::-webkit-scrollbar': {
               display: 'none',
@@ -153,10 +158,11 @@ const ImgGallery = ({ photos4k }) => {
       }}
     >
       <Fade in={viewerIsOpen}>
-        <Box sx={style} onClick={closeLightbox}>
+        <Box sx={mobile ? style : desktopStyle} onClick={closeLightbox}>
           <Box sx={{ m: 2, height: '100%' }}>
             <img
-              style={{ width: '100%' }}
+              style={ mobile ? { width: '100%' } : { height: '95vh', width: 'auto' }}
+              // style={{ width: '100%' }}
               src={currImgSrc}
               alt={`full size - ${currImgSrc}`}
             />
@@ -168,10 +174,10 @@ const ImgGallery = ({ photos4k }) => {
 
   return (
     <Box sx={{ m: 0.15 }}>
-      {(photos1k || photos2k) && images && (
+      {(photos1k || photos2k) && photos && (
         <Gallery
           // photos={isRetina ? photos2k : photos1k}
-          photos={images}
+          photos={photos}
           onClick={openLightbox}
           targetRowHeight={700}
           direction='row'

@@ -2,6 +2,7 @@ import React from 'react';
 import { Box, Zoom, Fab } from '@mui/material';
 import { KeyboardArrowUp } from '@mui/icons-material';
 import useScrollTrigger from '@mui/material/useScrollTrigger';
+import isMobile from './isMobile';
 
 const ScrollToTop = () => {
   const trigger = useScrollTrigger({
@@ -18,7 +19,7 @@ const ScrollToTop = () => {
         role='presentation'
         sx={{
           position: 'fixed',
-          bottom: 32,
+          bottom: `${isMobile() ? '10.5vh' : '32px'}`,
           right: 32,
           zIndex: 1,
         }}
