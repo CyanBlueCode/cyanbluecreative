@@ -5,39 +5,7 @@ import {
   Typography,
 } from '@mui/material';
 import ImageCard from './ImageCard';
-
-import Photo1 from '../../assets/CB-2K-1633232.jpg';
-import Photo2 from '../../assets/CB-2K-1633147.jpg';
-import Photo3 from '../../assets/P1511063.jpg';
-import Photo4 from '../../assets/P1511379.jpg';
-
-// ANCHOR UPDATE PHOTO BANNERS HERE
-const images = [
-  {
-    src: Photo4,
-    alt: 'Image 4',
-    title: 'street',
-    link: '/street',
-  },
-  {
-    src: Photo1,
-    alt: 'Image 1',
-    title: 'people',
-    link: '/construction',
-  },
-  {
-    src: Photo3,
-    alt: 'Image 3',
-    title: 'activism',
-    link: '/cantbreathe',
-  },
-  {
-    src: Photo2,
-    alt: 'Image 2',
-    title: 'contact',
-    link: '/contact',
-  },
-];
+import { photoBannerImages as images } from '../../config/contentConfig'
 
 const PhotoBanners = ({ imagesData = images }) => (
   <Box>

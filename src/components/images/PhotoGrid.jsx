@@ -22,7 +22,7 @@ const PhotoGrid = ({ galleryName = 'street', title, subText }) => {
   // TODO: implement MUI loading spinner while data being fetched?
   return (
     <div>
-      <Header title={title.toUpperCase()} subText={subText}/>
+      <Header title={title?.toUpperCase()} subText={subText}/>
       {photos4k && <ImgGallery photos4k={photos4k} />}
       {/* <div style={{ textAlign: 'center', marginTop: '15px' }}>
       <h5>POWER TO THE PEOPLE</h5>
